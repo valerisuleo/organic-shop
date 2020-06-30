@@ -64,3 +64,4 @@ node_modules/
 # dotenv environment variables file
 .env
 /src/environments/**
+db/init-db.js
