@@ -8,10 +8,10 @@ export class ShoppingService {
     constructor() { }
 
     private subject = new Subject();
-    allTodos: number;
+    numbOfItemsInBucket: number;
 
     sendData() {
-        this.subject.next(this.allTodos);
+        this.subject.next(this.numbOfItemsInBucket);
     }
 
     get getData() {

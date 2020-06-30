@@ -127,10 +127,10 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 const { items } = response;
+                
                 if (items.length) {
-
                     this.prexistingBucket = items;
-                    this.shoppingService.allTodos = items.length;
+                    this.shoppingService.numbOfItemsInBucket = items.length;
                     this.shoppingService.sendData();
 
                     const result = items.reduce((acc, current) => this.filterAndCount(acc, current, items), {});
