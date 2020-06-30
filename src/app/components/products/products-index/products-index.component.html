@@ -1,0 +1,60 @@
+<div class="row m-5">
+    <div class="col-4">
+        <bootstrap-list (handleSelectedLi)='handleSelectedLi($event)' [props]='listGroup'></bootstrap-list>
+    </div>
+
+
+    <div class="col-8">
+
+        <div class="row row-cols-md-1 row-cols-xl-2">
+            <bootstrap-cards-group *ngFor="let product of products">
+                <img class="selector-header card-img-top" src={{product.imageUrl}} alt="{{product.title}}">
+                <ng-container class="selector-body">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.title}}</h5>
+                        <p class="card-text">${{product.price}}</p>
+
+                        <ng-container *ngIf="!product.isOpen
+                            then button
+                            else counter">
+                        </ng-container>
+
+                        <ng-template #button>
+                            <button (click)="counterShow(product)" class="btn btn-secondary btn-block">ADD TO CART</button>
+                        </ng-template>
+
+                        <ng-template #counter>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
+                                </div>
+                                <input type="text" class="form-control text-center" [placeholder]="product.count + ' in cart'" readonly>
+                                <div class="input-group-append">
+                                    <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                    </div>
+                </ng-container>
+            </bootstrap-cards-group>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center m-5">
+                <ngb-pagination 
+                [collectionSize]="collectionSize" 
+                [(page)]="page"
+                [maxSize]="5" 
+                [pageSize]="pageSize" 
+                aria-label="Default pagination"
+                (pageChange)="handlePageChange($event)" 
+                (click)="handlePagination($event)">
+            </ngb-pagination>
+            </ul>
+        </nav>
+
+       
+
+    </div>
+</div>
