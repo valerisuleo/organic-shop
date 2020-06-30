@@ -69,7 +69,7 @@ export class DataService {
         return this.db.collection(collectioName).doc(id).valueChanges();
     }
 
-    update(collectioName: string, id: string, resource) {
+    updateItem(collectioName: string, id: string, resource) {
         return this.db.collection(collectioName).doc(id).set(resource);
     }
 

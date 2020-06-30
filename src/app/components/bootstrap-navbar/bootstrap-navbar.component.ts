@@ -1,7 +1,8 @@
+import * as fsBatchedWrites from '../batched-writes';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
-import * as fsBatchedWrites from '../batched-writes';
+import { ShoppingService } from '../../services/shopping.service';
 
 @Component({
     selector: 'bootstrap-navbar',
@@ -13,7 +14,10 @@ export class BootstrapNavbarComponent implements OnInit {
     isLoggedIn: boolean;
 
 
-    constructor(private db: AngularFirestore, private authService: AuthService) { }
+    constructor(
+        private shoppingService: ShoppingService, 
+        private db: AngularFirestore, 
+        private authService: AuthService) { }
 
     userBucket = {
         id: '',
@@ -24,7 +28,7 @@ export class BootstrapNavbarComponent implements OnInit {
         this.authService.isLoggedIn()
             .subscribe((data) => {
                 this.isLoggedIn = data;
-                
+
                 if (this.isLoggedIn) {
                     this.authService.getAuthState()
                         .subscribe((res: any) => {
@@ -39,12 +43,12 @@ export class BootstrapNavbarComponent implements OnInit {
     createUserBucket(uid: string): void {
         this.db.doc(`/userBucket/${uid}`).valueChanges()
             .subscribe((response: any) => {
-                if (!response) {                    
+                if (!response) {
                     this.userBucket.id = uid;
                     fsBatchedWrites.default.create(this.db, 'userBucket', uid, this.userBucket);
                 }
                 else {
-                    console.log('bucker alreday on db', response);
+                    // console.log('bucker alreday on db', response);
                 }
             });
     }
@@ -53,8 +57,17 @@ export class BootstrapNavbarComponent implements OnInit {
         this.authService.signOut();
     }
 
+
+    from2WithLove() {
+        this.shoppingService.getData
+            .subscribe((data) => {
+                console.log('ToTwoComponent', data);
+            });
+    }
+
     ngOnInit(): void {
         this.checkUserStatusBeforeCreateBucket();
+        this.from2WithLove();
 
     }
 

@@ -54,7 +54,7 @@ export class ProductsShowComponent extends BootstrapFormComponent implements OnI
     }
 
     productEdit(resource: IProduct): void {
-        this.service.update(this.apiEndPoint, this.id, resource);
+        this.service.updateItem(this.apiEndPoint, this.id, resource);
     }
 
     handleSubmit(isSubmitted: boolean): void {

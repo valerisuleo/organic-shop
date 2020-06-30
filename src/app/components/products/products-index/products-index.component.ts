@@ -2,11 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as fsBatchedWrites from '../../batched-writes';
 import { DataService } from '../../../services/data.service';
 import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap, IPagination } from '../interfaces';
-import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from '../../../services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ShoppingService } from '../../../services/shopping.service';
 
 @Component({
     selector: 'products-index',
@@ -14,11 +13,12 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./products-index.component.scss']
 })
 export class ProductsIndexComponent implements OnInit, OnDestroy {
-
+    
     public listGroup: IListGroup;
+    public categories: ICategoryMenu[] = [];
     public products: IProduct[] = [];
     public bucket: IProduct[] = [];
-    public categories: ICategoryMenu[] = [];
+    public prexistingBucket: IProduct[] = [];
     public bucketMap: IBucketMap[] = [];
 
     public lastPageloaded: number = 0;
@@ -32,9 +32,8 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
 
     constructor(
         private service: DataService,
-        private authService: AuthService,
+        private shoppingService: ShoppingService,
         private db: AngularFirestore,
-        private router: Router
     ) { }
 
     public getCategoriesMenu(): void {
@@ -43,6 +42,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             .subscribe((response: ICategoryMenu[]) => {
                 const defaultCategory: ICategoryMenu = this.getDefaultCollection(response, 'categoryName', 'Bread');
                 const { id, categoryName } = defaultCategory;
+
                 this.apiEndpoint = this.pathMaker(categoryName, id);
                 this.getCollection();
 
@@ -97,7 +97,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                             return item.name === element.title;
                         });
                         element.count = objInBucket?.quantity ? objInBucket?.quantity : 0;
-                        element.isOpen = true;
+                        element.isOpen = element.count ? true : false;
                     }
                     this.products = response;
                 });
@@ -128,6 +128,11 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             .subscribe((response: any) => {
                 const { items } = response;
                 if (items.length) {
+
+                    this.prexistingBucket = items;
+                    this.shoppingService.allTodos = items.length;
+                    this.shoppingService.sendData();
+
                     const result = items.reduce((acc, current) => this.filterAndCount(acc, current, items), {});
                     const bucketMap = this.objectToArray(result).map((item) => {
                         return {
@@ -158,10 +163,15 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         const uid = localStorage.getItem('uid');
         const index = this.products.indexOf(current);
         // updating view
-        current.count = current.count + 1;
-        this.products[index] = current;
+        const clone = { ...current };
+        clone.id = Date.now().toString();
+        clone.count = current.count + 1;
+        this.products[index] = clone;
         // updating db
-        this.bucket.push(current);
+        if (this.prexistingBucket.length && !this.bucket.length) {
+            this.bucket = this.prexistingBucket;
+        }
+        this.bucket.push(clone);
         this.bucket.forEach((obj, i) => obj.seqN = i + 1);
         fsBatchedWrites.default.update(this.db, 'userBucket', uid, { items: this.bucket });
     }
@@ -174,6 +184,9 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             current.count = current.count - 1;
             this.products[index] = current;
             // remove item from bucket on db
+            if (this.prexistingBucket.length && !this.bucket.length) {
+                this.bucket = this.prexistingBucket;
+            }
             const indexInBucket = this.bucket.indexOf(current);
             this.bucket.splice(indexInBucket, 1);
             fsBatchedWrites.default.update(this.db, 'userBucket', uid, { items: this.bucket })

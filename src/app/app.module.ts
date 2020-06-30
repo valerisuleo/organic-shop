@@ -7,11 +7,11 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {AngularFireAuthModule} from '@angular/fire/auth';
-
+import { AngularFireAuthModule } from '@angular/fire/auth';
 // extra
 import { environment } from '../environments/environment';
 import { DataService } from './services/data.service';
+import { AuthService } from './services/auth.service';
 // components
 import { AppComponent } from './app.component';
 import { ProductsIndexComponent } from './components/products/products-index/products-index.component';
@@ -24,8 +24,8 @@ import { BootstrapNavbarComponent } from './components/bootstrap-navbar/bootstra
 import { BootstrapCardGroupComponent } from './reusable-components/bootstrap-card/bootstrap-cards-group.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth.service';
 import { PaginationComponent } from './reusable-components/pagination/pagination.component';
+import { ShoppingService } from './services/shopping.service';
 
 
 @NgModule({
@@ -53,7 +53,11 @@ import { PaginationComponent } from './reusable-components/pagination/pagination
         NgbModule,
         AngularFireAuthModule
     ],
-    providers: [DataService, AuthService],
+    providers: [
+        DataService,
+        AuthService,
+        ShoppingService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
