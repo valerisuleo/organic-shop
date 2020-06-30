@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as fsBatchedWrites from '../../batched-writes';
 import { DataService } from '../../../services/data.service';
-import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap } from '../interfaces';
-import { Subscription } from 'rxjs';
+import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap, IPagination } from '../interfaces';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../../services/auth.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'products-index',
@@ -24,8 +25,10 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     public collectionSize: number = 6;
     public page: number = 1;
     public pageSize: number = 4;
-    // default apiCalled onload
     public apiEndpoint: string;
+
+    public currentLi: HTMLElement;
+    private destroyed$: Subject<boolean> = new Subject();
 
     constructor(
         private service: DataService,
@@ -34,10 +37,10 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         private router: Router
     ) { }
 
-    getCategoriesMenu(): void {
+    public getCategoriesMenu(): void {
         this.service.getAll('categories')
+            .pipe(takeUntil(this.destroyed$))
             .subscribe((response: ICategoryMenu[]) => {
-
                 const defaultCategory: ICategoryMenu = this.getDefaultCollection(response, 'categoryName', 'Bread');
                 const { id, categoryName } = defaultCategory;
                 this.apiEndpoint = this.pathMaker(categoryName, id);
@@ -53,18 +56,18 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             });
     }
 
-    getDefaultCollection(array: ICategoryMenu[], key: string, string): ICategoryMenu {
+    public getDefaultCollection(array: ICategoryMenu[], key: string, string): ICategoryMenu {
         return array.find((obj) => {
             return obj[key] === string;
         });
     }
 
-    pathMaker(string, id: string): string {
+    public pathMaker(string, id: string): string {
         const subPath: string = string.replace(/ /g, '').toLowerCase();
         return `categories/${id}/${subPath}`;
     }
 
-    handleSelectedLi(obj: ICategoryMenu): void {
+    public handleSelectedLi(obj: ICategoryMenu): void {
         const { id, categoryName, collectionSize } = obj;
         // reset
         this.products = [];
@@ -80,11 +83,10 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     //     this.router.navigate([`/products/${currentProduct.id}`], { state: { data: currentProduct } });
     // }
 
-    // _________________________HANDLE PAGINATION_________________________
 
-    getCollection(): void {
-        this.service
-            .getCollectionPaginated(this.apiEndpoint, 'seqN', "asc", this.lastPageloaded, 4)
+    public getCollection(): void {
+        this.service.getCollectionPaginated(this.apiEndpoint, 'seqN', "asc", this.lastPageloaded, 4)
+            .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 response.forEach((element: IProduct, i) => {
                     if (this.bucketMap.length === 0) {
@@ -102,46 +104,27 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             });
     }
 
-    handlePageChange(currentPage): void {
-        this.lastPageloaded = currentPage - 1;
-        this.getCollection();
+    // _________________________HANDLE PAGINATION_________________________
+    public getCurrent(e): void {
+        this.currentLi = e.target;
     }
 
-    handlePagination(e): void {
-        const next: string = 'Next';
-        const previous: string = 'Previous';
-        const current: HTMLElement = e.target;
-
-        if (current.getAttribute("aria-label") === next ||
-            current.parentElement.getAttribute("aria-label") === next) {
-            this.getNextSetOfItems();
-        }
-
-        if (current.getAttribute("aria-label") === previous ||
-            current.parentElement.getAttribute("aria-label") === previous) {
-            this.getPreviousSetOfItems();
-        }
-    }
-
-    getNextSetOfItems(): void {
-        this.lastPageloaded = this.lastPageloaded + 1;
-        this.getCollection();
-    }
-
-    getPreviousSetOfItems(): void {
-        this.lastPageloaded = this.lastPageloaded - 1;
+    public handlePagination(data: IPagination): void {
+        const { name, lastPageloaded } = data;
+        this.lastPageloaded = lastPageloaded;
         this.getCollection();
     }
 
     // _________________________HANDLE COUNTERS_________________________
-    counterShow(current: IProduct) {
+    public counterShow(current: IProduct) {
         current.isOpen = true;
     }
 
     // populate counters if data on db.
-    getBucket(): void {
+    public getBucket(): void {
         const uid = localStorage.getItem('uid');
         this.service.getItem('userBucket', uid)
+            .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 const { items } = response;
                 if (items.length) {
@@ -157,13 +140,13 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             });
     }
 
-    objectToArray(obj): any[][] {
+    public objectToArray(obj): any[][] {
         return Object.keys(obj).map((key) => {
             return [key, obj[key]];
         });
     }
 
-    filterAndCount(acc, current, array): any {
+    public filterAndCount(acc, current, array): any {
         const title = current.title;
         if (!acc[title]) {
             acc[title] = array.filter(item => item.title === current.title).length;
@@ -171,7 +154,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         return acc;
     }
 
-    addItem(current: IProduct) {
+    public addItem(current: IProduct) {
         const uid = localStorage.getItem('uid');
         const index = this.products.indexOf(current);
         // updating view
@@ -183,7 +166,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         fsBatchedWrites.default.update(this.db, 'userBucket', uid, { items: this.bucket });
     }
 
-    removeItem(current: IProduct) {
+    public removeItem(current: IProduct) {
         const uid = localStorage.getItem('uid');
 
         if (current.count >= 1) {
@@ -200,11 +183,13 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.getBucket();
         this.getCategoriesMenu();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 }

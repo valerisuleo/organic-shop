@@ -3,7 +3,6 @@
         <bootstrap-list (handleSelectedLi)='handleSelectedLi($event)' [props]='listGroup'></bootstrap-list>
     </div>
 
-
     <div class="col-8">
 
         <div class="row row-cols-md-1 row-cols-xl-2">
@@ -39,22 +38,21 @@
                 </ng-container>
             </bootstrap-cards-group>
         </div>
-
+      
         <nav>
             <ul class="pagination justify-content-center m-5">
-                <ngb-pagination 
-                [collectionSize]="collectionSize" 
-                [(page)]="page"
-                [maxSize]="5" 
-                [pageSize]="pageSize" 
-                aria-label="Default pagination"
-                (pageChange)="handlePageChange($event)" 
-                (click)="handlePagination($event)">
-            </ngb-pagination>
+                <ngbootstrap-pagination
+                    [collectionSize]="collectionSize" 
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [lastPageloaded]="lastPageloaded"
+                    (click)="getCurrent($event)"
+                    [currentLi]='currentLi'
+                    (handlePagination)='handlePagination($event)'
+                >
+                </ngbootstrap-pagination>
             </ul>
         </nav>
-
-       
 
     </div>
 </div>

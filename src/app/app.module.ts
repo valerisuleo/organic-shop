@@ -25,6 +25,7 @@ import { BootstrapCardGroupComponent } from './reusable-components/bootstrap-car
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
+import { PaginationComponent } from './reusable-components/pagination/pagination.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { AuthService } from './services/auth.service';
         BootstrapNavbarComponent,
         ShoppingCartComponent,
         LoginComponent,
+        PaginationComponent,
     ],
     imports: [
         BrowserModule,

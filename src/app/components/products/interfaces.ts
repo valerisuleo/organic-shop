@@ -32,3 +32,8 @@ export interface IBucketMap {
     name: string;
     quantity: number;
 }
+
+export interface IPagination {
+    name: string;
+    lastPageloaded: number;
+}
