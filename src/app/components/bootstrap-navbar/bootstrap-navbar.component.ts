@@ -12,6 +12,7 @@ import { ShoppingService } from '../../services/shopping.service';
 export class BootstrapNavbarComponent implements OnInit {
 
     isLoggedIn: boolean;
+    counter: number;
 
 
     constructor(
@@ -58,16 +59,16 @@ export class BootstrapNavbarComponent implements OnInit {
     }
 
 
-    from2WithLove() {
+    fromProductIndex() {
         this.shoppingService.getData
-            .subscribe((data) => {
-                console.log('ToTwoComponent', data);
+            .subscribe((data: number) => {
+                this.counter = data;
             });
     }
 
     ngOnInit(): void {
         this.checkUserStatusBeforeCreateBucket();
-        this.from2WithLove();
+        this.fromProductIndex();
 
     }
 
