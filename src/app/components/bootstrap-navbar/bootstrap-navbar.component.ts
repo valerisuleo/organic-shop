@@ -2,7 +2,7 @@ import * as fsBatchedWrites from '../batched-writes';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
-import { ShoppingService } from '../../services/shopping.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
     selector: 'bootstrap-navbar',
@@ -16,9 +16,10 @@ export class BootstrapNavbarComponent implements OnInit {
 
 
     constructor(
-        private shoppingService: ShoppingService, 
-        private db: AngularFirestore, 
-        private authService: AuthService) { }
+        private db: AngularFirestore,
+        private authService: AuthService,
+        private service: DataService
+    ) { }
 
     userBucket = {
         id: '',
@@ -59,16 +60,14 @@ export class BootstrapNavbarComponent implements OnInit {
     }
 
 
-    fromProductIndex() {
-        this.shoppingService.getData
-            .subscribe((data: number) => {
-                this.counter = data;
-            });
+    displayQuantity() {
+        const uid = localStorage.getItem('uid');
+        this.service.getItem('userBucket', uid).subscribe((response: any) => this.counter = response.items.length);
     }
 
     ngOnInit(): void {
+        this.displayQuantity();
         this.checkUserStatusBeforeCreateBucket();
-        this.fromProductIndex();
 
     }
 

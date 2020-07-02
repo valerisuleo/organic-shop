@@ -5,7 +5,6 @@ import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap, IPagination
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ShoppingService } from '../../../services/shopping.service';
 
 @Component({
     selector: 'products-index',
@@ -32,7 +31,6 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
 
     constructor(
         private service: DataService,
-        private shoppingService: ShoppingService,
         private db: AngularFirestore,
     ) { }
 
@@ -130,8 +128,6 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                 
                 if (items.length) {
                     this.prexistingBucket = items;
-                    this.shoppingService.numbOfItemsInBucket = items.length;
-                    this.shoppingService.sendData();
 
                     const result = items.reduce((acc, current) => this.filterAndCount(acc, current, items), {});
                     const bucketMap = this.objectToArray(result).map((objProperty) => {

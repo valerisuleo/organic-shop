@@ -25,7 +25,6 @@ import { BootstrapCardGroupComponent } from './reusable-components/bootstrap-car
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { PaginationComponent } from './reusable-components/pagination/pagination.component';
-import { ShoppingService } from './services/shopping.service';
 import { BootstrapTableComponent } from './reusable-components/bootstrap-table/bootstrap-table.component';
 
 
@@ -58,7 +57,6 @@ import { BootstrapTableComponent } from './reusable-components/bootstrap-table/b
     providers: [
         DataService,
         AuthService,
-        ShoppingService
     ],
     bootstrap: [AppComponent]
 })
