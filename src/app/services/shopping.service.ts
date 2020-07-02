@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ShoppingService {
 
-    constructor() { }
-
     private subject = new Subject();
-    numbOfItemsInBucket: number;
+    public numbOfItemsInBucket: number;
+
+    constructor() { }
 
     sendData() {
         this.subject.next(this.numbOfItemsInBucket);
@@ -17,6 +16,4 @@ export class ShoppingService {
     get getData() {
         return this.subject.asObservable();
     }
-
-
 }

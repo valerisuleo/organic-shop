@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as fsBatchedWrites from '../../batched-writes';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap, IPagination } from '../interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -99,7 +99,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                         element.count = objInBucket?.quantity ? objInBucket?.quantity : 0;
                         element.isOpen = element.count ? true : false;
                     }
-                    this.products = response;
+                    this.products = response;                    
                 });
             });
     }
@@ -124,7 +124,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     public getBucket(): void {
         const uid = localStorage.getItem('uid');
         this.service.getItem('userBucket', uid)
-            .pipe(takeUntil(this.destroyed$))
+            // .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 const { items } = response;
                 
@@ -134,10 +134,10 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                     this.shoppingService.sendData();
 
                     const result = items.reduce((acc, current) => this.filterAndCount(acc, current, items), {});
-                    const bucketMap = this.objectToArray(result).map((item) => {
+                    const bucketMap = this.objectToArray(result).map((objProperty) => {
                         return {
-                            name: item[0],
-                            quantity: item[1]
+                            name: objProperty[0],
+                            quantity: objProperty[1]
                         }
                     });
                     this.bucketMap = bucketMap;

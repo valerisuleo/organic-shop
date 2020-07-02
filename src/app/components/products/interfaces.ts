@@ -9,6 +9,7 @@ export interface IProduct {
     isOpen: boolean;
     seqN: number;
     inStock: number;
+    quantity?: number;
 }
 
 export interface ICategoryMenu {

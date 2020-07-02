@@ -26,6 +26,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { LoginComponent } from './components/login/login.component';
 import { PaginationComponent } from './reusable-components/pagination/pagination.component';
 import { ShoppingService } from './services/shopping.service';
+import { BootstrapTableComponent } from './reusable-components/bootstrap-table/bootstrap-table.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ShoppingService } from './services/shopping.service';
         ShoppingCartComponent,
         LoginComponent,
         PaginationComponent,
+        BootstrapTableComponent,
     ],
     imports: [
         BrowserModule,
