@@ -1,21 +1,21 @@
-<div class="row m-3">
+<div *ngIf="pruductsInBucket?.length" class="row m-3">
     <div class="col-xl-8">
         <bootstrap-table>
             <ng-container class="th">
                 <th *ngFor="let label of th">
-                    {{label}}
+                    {{ label }}
                 </th>
             </ng-container>
 
-            <ng-container class="tbody">
-                <tr *ngFor="let product of bucket">
+            <ng-container class="tr">
+                <tr *ngFor="let product of pruductsInBucket">
                     <td>
                         <div class="img-wrapper">
-                            <img src="{{product.imageUrl}}" alt="">
+                            <img src="{{ product.imageUrl }}" alt="">
                         </div>
                     </td>
                     <td>
-                        {{product.title}}
+                        {{ product.title }}
                     </td>
                     <td>
                         <div class="input-group">
@@ -29,7 +29,15 @@
                         </div>
                     </td>
                     <td>
-                        {{product.price * product.count | number }}
+                        ${{ product.price * product.count | number }}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <strong>${{ totalAmount }}</strong>
                     </td>
                 </tr>
             </ng-container>

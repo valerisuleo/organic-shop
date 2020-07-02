@@ -12,13 +12,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
     styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-    
-    public bucket: IProduct[];
-    public th: string[] = ['', 'Product', 'Quantity', 'Price'];
-    private isWhatWeDoInTheShadow: IProduct[] =[]
-    private uid: string = localStorage.getItem('uid');
 
+    private isWhatWeDoInTheShadow: IProduct[] = []
+    public pruductsInBucket: IProduct[];
+    public th: string[] = ['', 'Product', 'Quantity', 'Price'];
+    
     private uniqueObject = {};
+    public totalAmount: number;
+    private uid: string = localStorage.getItem('uid');
     private destroyed$: Subject<boolean> = new Subject();
 
     constructor(private service: DataService, private db: AngularFirestore) { }
@@ -26,13 +27,15 @@ export class ShoppingCartComponent implements OnInit {
     public getBucket(): void {
         this.service.getItem('userBucket', this.uid)
             .pipe(takeUntil(this.destroyed$))
-            .subscribe((response: any) => {                
-                this.isWhatWeDoInTheShadow = response.items;
-                this.bucket = this.removeDuplicates(response.items);
+            .subscribe((response: any) => {
+                const { items } = response;
+                this.isWhatWeDoInTheShadow = items;
+                this.pruductsInBucket = this.removeDuplicates(items);
+                this.getTotalAmount(this.pruductsInBucket);
             });
     }
 
-    private removeDuplicates(items) {
+    private removeDuplicates(items): any[] {
         for (let i = 0; i < items.length; i++) {
             // Extract the title 
             const objTitle = items[i].title;
@@ -44,13 +47,13 @@ export class ShoppingCartComponent implements OnInit {
         });
     }
 
-    public addItem(currentProduct: IProduct) {
-        const clone = { ...currentProduct };        
-        const index = this.bucket.indexOf(currentProduct);
-        
+    public addItem(currentProduct: IProduct): void {
+        const clone = { ...currentProduct };
+        const index: number = this.pruductsInBucket.indexOf(currentProduct);
+
         clone.count = currentProduct.count + 1;
         clone.id = Date.now().toString();
-        this.bucket[index] = clone;
+        this.pruductsInBucket[index] = clone;
 
         this.isWhatWeDoInTheShadow.push(clone);
         this.isWhatWeDoInTheShadow.forEach((obj, i) => obj.seqN = i + 1);
@@ -58,16 +61,25 @@ export class ShoppingCartComponent implements OnInit {
         fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
     }
 
-    public removeItem(currentProduct: IProduct) {
-        const index = this.bucket.indexOf(currentProduct);
-        
-        currentProduct.count = currentProduct.count -1;
-        this.bucket[index] = currentProduct;
+    public removeItem(currentProduct: IProduct): void {
+        const index: number = this.pruductsInBucket.indexOf(currentProduct);
 
-        const indexInBucket = this.isWhatWeDoInTheShadow.indexOf(currentProduct);
-        this.isWhatWeDoInTheShadow.splice(indexInBucket, 1);
-        
-        fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
+        if (currentProduct.count >= 1) {
+            currentProduct.count = currentProduct.count - 1;
+            this.pruductsInBucket[index] = currentProduct;
+
+            const indexInBucket: number = this.isWhatWeDoInTheShadow.indexOf(currentProduct);
+            this.isWhatWeDoInTheShadow.splice(indexInBucket, 1);
+
+            fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
+        }
+    }
+
+
+    public getTotalAmount(producsInBucket: IProduct[]): void {
+       const total = producsInBucket.map(obj => obj.price * obj.count);
+       const reducer = (accumulator, currentValue) => accumulator + currentValue;
+       this.totalAmount = total.reduce(reducer);
     }
 
     private objectToArray(obj): any[][] {
