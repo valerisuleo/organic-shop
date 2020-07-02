@@ -20,8 +20,7 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button class="btn btn-secondary" type="button">-</button>
-                                <!-- <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button> -->
+                                <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
                             </div>
                             <input type="text" class="form-control text-center" [placeholder]="product.count + ' in cart'" readonly>
                             <div class="input-group-append">
