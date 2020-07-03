@@ -5,6 +5,7 @@ import { DataService } from '../../services/data.service';
 import { takeUntil } from 'rxjs/operators';
 import { IProduct } from '../products/interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'shopping-cart',
@@ -13,28 +14,33 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class ShoppingCartComponent implements OnInit {
 
-    private isWhatWeDoInTheShadow: IProduct[] = []
+    public isWhatWeDoInTheShadow: IProduct[] = []
     public pruductsInBucket: IProduct[];
     public th: string[] = ['', 'Product', 'Quantity', 'Price'];
-    
+
     private uniqueObject = {};
     public totalAmount: number;
     private uid: string = localStorage.getItem('uid');
     private destroyed$: Subject<boolean> = new Subject();
 
-    constructor(private service: DataService, private db: AngularFirestore) { }
+    constructor(
+        private service: DataService, 
+        private router: Router, 
+        private db: AngularFirestore) { }
 
     public getBucket(): void {
         this.service.getItem('userBucket', this.uid)
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
-                const { items } = response;
-                this.isWhatWeDoInTheShadow = items;
-                this.pruductsInBucket = this.removeDuplicates(items);
-                this.getTotalAmount(this.pruductsInBucket);
+                if (response && response.items.length) {
+                    const { items } = response;
+                    this.isWhatWeDoInTheShadow = items;
+                    this.pruductsInBucket = this.removeDuplicates(items);
+                    this.getTotalAmount(this.pruductsInBucket);
+                }
             });
     }
-
+    
     private removeDuplicates(items): any[] {
         for (let i = 0; i < items.length; i++) {
             // Extract the title 
@@ -44,6 +50,12 @@ export class ShoppingCartComponent implements OnInit {
         };
         return this.objectToArray(this.uniqueObject).map((objProperty) => {
             return objProperty[1];
+        });
+    }
+
+    private objectToArray(obj): any[][] {
+        return Object.keys(obj).map((key) => {
+            return [key, obj[key]];
         });
     }
 
@@ -75,17 +87,21 @@ export class ShoppingCartComponent implements OnInit {
         }
     }
 
-
     public getTotalAmount(producsInBucket: IProduct[]): void {
-       const total = producsInBucket.map(obj => obj.price * obj.count);
-       const reducer = (accumulator, currentValue) => accumulator + currentValue;
-       this.totalAmount = total.reduce(reducer);
+        const total = producsInBucket.map(obj => obj.price * obj.count);
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+        this.totalAmount = total.reduce(reducer);
     }
 
-    private objectToArray(obj): any[][] {
-        return Object.keys(obj).map((key) => {
-            return [key, obj[key]];
-        });
+    public emptyBucket(): void {
+        fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: [] });
+        this.isWhatWeDoInTheShadow = [];
+    }
+
+    public handleClick(data: boolean): void {
+        if (data) {
+            this.router.navigate(['/products']);
+        }
     }
 
     public ngOnInit(): void {

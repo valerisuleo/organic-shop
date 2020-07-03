@@ -19,3 +19,20 @@
 tr>td {
     vertical-align: middle;
 }
+
+.header-tr {
+    th {
+        border-bottom: none;
+        &:nth-of-type(1) {
+            font-weight: normal;
+        }
+        
+        &:nth-of-type(4) {
+            font-weight: normal;
+
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+}

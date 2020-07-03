@@ -26,6 +26,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { LoginComponent } from './components/login/login.component';
 import { PaginationComponent } from './reusable-components/pagination/pagination.component';
 import { BootstrapTableComponent } from './reusable-components/bootstrap-table/bootstrap-table.component';
+import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/bootstrap-alert.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { BootstrapTableComponent } from './reusable-components/bootstrap-table/b
         LoginComponent,
         PaginationComponent,
         BootstrapTableComponent,
+        BootstrapAlertComponent,
     ],
     imports: [
         BrowserModule,

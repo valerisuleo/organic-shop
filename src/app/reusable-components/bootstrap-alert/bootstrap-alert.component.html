@@ -1,0 +1,12 @@
+<div [class]="contextualClasses" role="alert">
+    <h4 class="alert-heading">
+        <ng-content select=".title"></ng-content>
+    </h4>
+    <p>
+        <ng-content select=".message"></ng-content>
+    </p>
+    <hr>
+    <a (click)="doClick()" class="btn btn-primary btn-sm" role="button">
+        <ng-content select=".label"></ng-content>
+    </a>
+</div>
