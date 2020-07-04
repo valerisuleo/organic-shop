@@ -8,62 +8,61 @@
 </div>
 
 <ng-template #shoppingCart>
-    <bootstrap-table>
-
-        <ng-container class="header-table">
-            <tr class="header-tr">
-                <th>
-                    You have {{ isWhatWeDoInTheShadow.length }} in your cart.
-                </th>
-                <th></th>
-                <th></th>
-                <th>
-                    <span (click)="emptyBucket()">Clear Shopping Cart</span>
-                </th>
-            </tr>
-            <tr>
-                <th *ngFor="let label of th">
-                    {{ label }}
-                </th>
-            </tr>
-        </ng-container>
-
-        <ng-container class="body-table">
-            <tr *ngFor="let product of pruductsInBucket">
-                <td>
-                    <div class="img-wrapper">
-                        <img src="{{ product.imageUrl }}" alt="">
+    
+<bootstrap-table>
+    <ng-container class="header-table">
+        <tr class="header-tr">
+            <th>
+                You have {{ isWhatWeDoInTheShadow.length }} in your cart.
+            </th>
+            <th></th>
+            <th></th>
+            <th>
+                <span (click)="emptyBucket()">Clear Shopping Cart</span>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let label of th">
+                {{ label }}
+            </th>
+        </tr>
+    </ng-container>
+    
+    <ng-container class="body-table">
+        <tr *ngFor="let product of pruductsInBucket">
+            <td>
+                <div class="img-wrapper">
+                    <img src="{{ product.imageUrl }}" alt="">
+                </div>
+            </td>
+            <td>
+                {{ product.title }}
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
                     </div>
-                </td>
-                <td>
-                    {{ product.title }}
-                </td>
-                <td>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
-                        </div>
-                        <input type="text" class="form-control text-center" [placeholder]="product.count + ' in cart'" readonly>
-                        <div class="input-group-append">
-                            <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
-                        </div>
+                    <input type="text" class="form-control text-center" [placeholder]="product.quantity + ' in cart'" readonly>
+                    <div class="input-group-append">
+                        <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
                     </div>
-                </td>
-                <td>
-                    ${{ product.price * product.count | number }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <strong>${{ totalAmount | number }}</strong>
-                </td>
-            </tr>
-        </ng-container>
-
-    </bootstrap-table>
+                </div>
+            </td>
+            <td>
+                ${{ product.price * product.quantity | number }}
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <strong>${{ totalAmount | number }}</strong>
+            </td>
+        </tr>
+    </ng-container>
+</bootstrap-table>
 </ng-template>
 
 <ng-template #alert>
@@ -73,3 +72,5 @@
         <ng-container class="label">Shop Now</ng-container>
     </bootstrap-alert>
 </ng-template>
+
+
