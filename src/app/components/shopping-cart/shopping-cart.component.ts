@@ -14,14 +14,16 @@ import { Router } from '@angular/router';
 })
 export class ShoppingCartComponent implements OnInit {
 
-    public isWhatWeDoInTheShadow: IProduct[] = []
     public pruductsInBucket: IProduct[];
+    public isWhatWeDoInTheShadow: IProduct[] = []
     public th: string[] = ['', 'Product', 'Quantity', 'Price'];
 
     private uniqueObject = {};
     public totalAmount: number;
     private uid: string = localStorage.getItem('uid');
     private destroyed$: Subject<boolean> = new Subject();
+
+    
 
     constructor(
         private service: DataService, 

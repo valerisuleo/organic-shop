@@ -8,6 +8,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 // extra
 import { environment } from '../environments/environment';
 import { DataService } from './services/data.service';
@@ -54,7 +56,8 @@ import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/b
         AngularFireAnalyticsModule,
         ReactiveFormsModule,
         NgbModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        FontAwesomeModule
     ],
     providers: [
         DataService,

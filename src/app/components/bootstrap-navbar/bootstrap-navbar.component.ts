@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
+import { faLeaf, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'bootstrap-navbar',
@@ -11,9 +12,10 @@ import { DataService } from '../../services/data.service';
 })
 export class BootstrapNavbarComponent implements OnInit {
 
-    isLoggedIn: boolean;
-    counter: number;
-
+    public isLoggedIn: boolean;
+    public counter: number;
+    public faLeaf: IconDefinition = faLeaf;
+    public faShoppingCart: IconDefinition = faShoppingCart;
 
     constructor(
         private db: AngularFirestore,

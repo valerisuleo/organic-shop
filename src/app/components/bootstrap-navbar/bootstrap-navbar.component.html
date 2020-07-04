@@ -1,13 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" [routerLink]="['/products']">Leaf</a>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/products']">
+        <fa-icon [icon]="faLeaf"></fa-icon>
+    </a>
     <div class="navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" [routerLink]="['/shopping-carts']">Trolley
-                <span>
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" [routerLink]="['/shopping-carts']">
+                <fa-icon [icon]="faShoppingCart"></fa-icon>
+                <span class="ml-2">
                     {{counter}}
                 </span>
             </a>
-            <a class="nav-item nav-link" (click)="logout()">logout</a>
+            
         </div>
+        <div class="form-inline">
+            <a class="nav-item nav-link mr-5" (click)="logout()">Logout</a>
+          </div>
     </div>
 </nav>
