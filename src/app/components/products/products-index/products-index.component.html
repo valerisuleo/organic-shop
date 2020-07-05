@@ -6,7 +6,7 @@
     <div class="col-8">
 
         <div class="row row-cols-md-1 row-cols-xl-2">
-            <bootstrap-cards-group *ngFor="let product of products">
+            <bootstrap-cards-group *ngFor="let product of products; trackBy: trackProduct">
                 <img class="selector-header card-img-top" src={{product.imageUrl}} alt="{{product.title}}">
                 <ng-container class="selector-body">
                     <div class="card-body">
@@ -27,7 +27,7 @@
                                 <div class="input-group-prepend">
                                     <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
                                 </div>
-                                <input type="text" class="form-control text-center" [placeholder]="product.count + ' in cart'" readonly>
+                                <input type="text" class="form-control text-center" [placeholder]="product.quantity + ' in cart'" readonly>
                                 <div class="input-group-append">
                                     <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
                                 </div>

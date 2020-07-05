@@ -1,4 +1,5 @@
 import * as fsBatchedWrites from '../batched-writes';
+import * as utilitiesArray from '../utilities-array';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataService } from '../../services/data.service';
@@ -35,39 +36,15 @@ export class ShoppingCartComponent implements OnInit {
             .subscribe((response: any) => {
                 const { items } = response;
                 this.isWhatWeDoInTheShadow = items;
-                const data = this.groupBy(this.isWhatWeDoInTheShadow, 'title');
+                const data = utilitiesArray.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
 
                 this.isWhatWeDoInTheShadow.forEach((obj: IProduct) => {
                     obj.quantity = data[obj.title]?.length;
                 });
 
-                this.pruductsInBucket = this.removeDuplicates(this.isWhatWeDoInTheShadow);
+                this.pruductsInBucket = utilitiesArray.default.removeDuplicates(this.isWhatWeDoInTheShadow, 'title');
                 this.getTotalAmount(this.pruductsInBucket);
             });
-    }
-
-    private groupBy(objectArray, property) {
-        return objectArray.reduce(function (acc, obj) {
-          let key = obj[property]
-          if (!acc[key]) {
-            acc[key] = []
-          }
-          acc[key].push(obj)
-          return acc
-        }, {})
-      }
-
-    private removeDuplicates(items) {
-        const result = [];
-        for (let i = 0; i < items.length; i++) {
-            // Extract the title 
-            const objTitle = items[i].title;
-
-            if (!result.find(item => item.title === objTitle)) {
-                result.push(items[i])
-            }
-        };        
-        return result;
     }
 
     public addItem(currentProduct: IProduct): void {
@@ -77,8 +54,8 @@ export class ShoppingCartComponent implements OnInit {
         fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
     }
 
-    public removeItem(currentProduct: IProduct): void {
-        if (currentProduct.count >= 1) {
+    public removeItem(currentProduct: IProduct): void {        
+        if (currentProduct.quantity >= 1) {            
             const indexInBucket: number = this.isWhatWeDoInTheShadow.indexOf(currentProduct);
             this.isWhatWeDoInTheShadow.splice(indexInBucket, 1);
             fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });

@@ -1,7 +1,8 @@
 import * as fsBatchedWrites from '../../batched-writes';
+import * as utilitiesArray from '../../utilities-array';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
-import { IProduct, ICategoryMenu, IListGroup, ICategory, IBucketMap, IPagination } from '../interfaces';
+import { IProduct, ICategoryMenu, IListGroup, IPagination } from '../interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,19 +13,18 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./products-index.component.scss']
 })
 export class ProductsIndexComponent implements OnInit, OnDestroy {
-    
+
+    private isWhatWeDoInTheShadow: IProduct[] = [];
     public listGroup: IListGroup;
     public categories: ICategoryMenu[] = [];
     public products: IProduct[] = [];
-    public bucket: IProduct[] = [];
-    public prexistingBucket: IProduct[] = [];
-    public bucketMap: IBucketMap[] = [];
 
     public lastPageloaded: number = 0;
     public collectionSize: number = 6;
     public page: number = 1;
     public pageSize: number = 4;
     public apiEndpoint: string;
+    public uid: string = localStorage.getItem('uid');
 
     public currentLi: HTMLElement;
     private destroyed$: Subject<boolean> = new Subject();
@@ -86,20 +86,28 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         this.service.getCollectionPaginated(this.apiEndpoint, 'seqN', "asc", this.lastPageloaded, 4)
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
-                response.forEach((element: IProduct, i) => {
-                    if (this.bucketMap.length === 0) {
-                        element.count = 0;
-                        element.isOpen = false;
-                    } else {
-                        const objInBucket = this.bucketMap.find((item) => {
-                            return item.name === element.title;
+
+                response.forEach((element: IProduct) => {
+
+                    if (this.isWhatWeDoInTheShadow.length) {
+                        const result = this.isWhatWeDoInTheShadow.find((obj) => {
+                            return obj.title === element.title;
                         });
-                        element.count = objInBucket?.quantity ? objInBucket?.quantity : 0;
-                        element.isOpen = element.count ? true : false;
+                        element.quantity = result?.quantity ? result?.quantity : 0;
+                        element.isOpen = result?.quantity ? true : false;
+
+                    } else {
+                        element.quantity = 0;
+                        element.isOpen = false;
                     }
-                    this.products = response;                    
                 });
+                this.products = response;
             });
+    }
+
+    // we prevent angular form rebuilding the whole DOM.
+    public trackProduct(index, product): any {
+        return product ? product.id : undefined;
     }
 
     // _________________________HANDLE PAGINATION_________________________
@@ -118,82 +126,39 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         current.isOpen = true;
     }
 
-    // populate counters if data on db.
-    public getBucket(): void {
-        const uid = localStorage.getItem('uid');
-        this.service.getItem('userBucket', uid)
-            // .pipe(takeUntil(this.destroyed$))
+    public getUserBucket(): void {
+        this.service.getItem('userBucket', this.uid)
+            .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
-                const { items } = response;
-                
-                if (items.length) {
-                    this.prexistingBucket = items;
-
-                    const result = items.reduce((acc, current) => this.filterAndCount(acc, current, items), {});
-                    const bucketMap = this.objectToArray(result).map((objProperty) => {
-                        return {
-                            name: objProperty[0],
-                            quantity: objProperty[1]
-                        }
-                    });
-                    this.bucketMap = bucketMap;
-                }
+                this.isWhatWeDoInTheShadow = response.items;
+                const data = utilitiesArray.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
+                this.isWhatWeDoInTheShadow.forEach((obj: IProduct) => {
+                    obj.quantity = data[obj.title]?.length;
+                });
             });
     }
 
-    public objectToArray(obj): any[][] {
-        return Object.keys(obj).map((key) => {
-            return [key, obj[key]];
-        });
-    }
-
-    public filterAndCount(acc, current, array): any {
-        const title = current.title;
-        if (!acc[title]) {
-            acc[title] = array.filter(item => item.title === current.title).length;
-        }
-        return acc;
-    }
-
-    public addItem(current: IProduct) {
-        const uid = localStorage.getItem('uid');
-        const index = this.products.indexOf(current);
-        // updating view
-        const clone = { ...current };
+    public addItem(current: IProduct): void {
+        const clone = {...current};
         clone.id = Date.now().toString();
-        clone.count = current.count + 1;
-        this.products[index] = clone;
-        // updating db
-        if (this.prexistingBucket.length && !this.bucket.length) {
-            this.bucket = this.prexistingBucket;
-        }
-        this.bucket.push(clone);
-        this.bucket.forEach((obj, i) => obj.seqN = i + 1);
-        fsBatchedWrites.default.update(this.db, 'userBucket', uid, { items: this.bucket });
+        this.isWhatWeDoInTheShadow.push(clone);
+        this.isWhatWeDoInTheShadow.forEach((obj, i) => obj.seqN = i + 1);
+        fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
+        this.getCollection();
     }
 
     public removeItem(current: IProduct) {
-        const uid = localStorage.getItem('uid');
-
-        if (current.count >= 1) {
-            const index = this.products.indexOf(current);
-            current.count = current.count - 1;
-            this.products[index] = current;
-            // remove item from bucket on db
-            if (this.prexistingBucket.length && !this.bucket.length) {
-                this.bucket = this.prexistingBucket;
-            }
-            const indexInBucket = this.bucket.indexOf(current);
-            this.bucket.splice(indexInBucket, 1);
-            fsBatchedWrites.default.update(this.db, 'userBucket', uid, { items: this.bucket })
-        }
-        if (current.count === 0) {
-            current.isOpen = false;
+        if (current.quantity >= 1) {
+            const result = this.isWhatWeDoInTheShadow.find(obj => obj.title === current.title );
+            const index = this.isWhatWeDoInTheShadow.indexOf(result);
+            this.isWhatWeDoInTheShadow.splice(index, 1);
+            fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
+            this.getCollection();
         }
     }
 
     public ngOnInit(): void {
-        this.getBucket();
+        this.getUserBucket();
         this.getCategoriesMenu();
     }
 
