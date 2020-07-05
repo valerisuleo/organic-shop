@@ -66,9 +66,11 @@ export class DataService {
     }
 
     getItem(collectioName: string, id: string) {
+        console.log(collectioName, id);
+        
         return this.db.collection(collectioName).doc(id).valueChanges();
     }
-
+    
     updateItem(collectioName: string, id: string, resource) {
         return this.db.collection(collectioName).doc(id).set(resource);
     }

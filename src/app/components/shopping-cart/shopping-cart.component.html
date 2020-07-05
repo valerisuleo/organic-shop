@@ -1,68 +1,83 @@
 <div class="row m-3">
-    <div class="col-md-12 col-xl-9">
+    <div class="col-xl-8">
         <ng-container *ngIf="isWhatWeDoInTheShadow.length
             then shoppingCart
             else alert">
         </ng-container>
     </div>
+    <div class="col-xl-4">
+        <bootstrap-card>
+            <ng-container class="selector-header">
+                <div class="card-header">
+                    Featured
+                </div>
+            </ng-container>
+            <ng-container class="selector-body">
+                <div class="card-body">
+                    <h5 class="card-title">You have {{ isWhatWeDoInTheShadow.length }} items in your cart.</h5>
+                    <p class="card-text">Subtotal: <strong>${{ totalAmount | number }}</strong></p>
+                    <button (click)="navigateTo()" class="btn btn-primary">Proceed to Checkout</button>
+                </div>
+            </ng-container>
+        </bootstrap-card>
+    </div>
 </div>
 
+
 <ng-template #shoppingCart>
-    
-<bootstrap-table>
-    <ng-container class="header-table">
-        <tr class="header-tr">
-            <th>
-                You have {{ isWhatWeDoInTheShadow.length }} items in your cart.
-            </th>
-            <th></th>
-            <th></th>
-            <th>
-                <span (click)="emptyBucket()">Clear Shopping Cart</span>
-            </th>
-        </tr>
-        <tr>
-            <th *ngFor="let label of th">
-                {{ label }}
-            </th>
-        </tr>
-    </ng-container>
-    
-    <ng-container class="body-table">
-        <tr *ngFor="let product of pruductsInBucket">
-            <td>
-                <div class="img-wrapper">
-                    <img src="{{ product.imageUrl }}" alt="">
-                </div>
-            </td>
-            <td>
-                {{ product.title }}
-            </td>
-            <td>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
+
+    <bootstrap-table>
+        <ng-container class="header-table">
+            <tr class="header-tr">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                    <span (click)="emptyBucket()">Clear Shopping Cart</span>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let label of th">
+                    {{ label }}
+                </th>
+            </tr>
+        </ng-container>
+
+        <ng-container class="body-table">
+            <tr *ngFor="let product of pruductsInBucket">
+                <td>
+                    <div class="img-wrapper">
+                        <img src="{{ product.imageUrl }}" alt="">
                     </div>
-                    <input type="text" class="form-control text-center" [placeholder]="product.quantity + ' in cart'" readonly>
-                    <div class="input-group-append">
-                        <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
+                </td>
+                <td>
+                    {{ product.title }}
+                </td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button (click)="removeItem(product)" class="btn btn-secondary" type="button">-</button>
+                        </div>
+                        <input type="text" class="form-control text-center" [placeholder]="product.quantity + ' in cart'" readonly>
+                        <div class="input-group-append">
+                            <button (click)="addItem(product)" class="btn btn-secondary" type="button">+</button>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                ${{ product.price * product.quantity | number }}
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <strong>${{ totalAmount | number }}</strong>
-            </td>
-        </tr>
-    </ng-container>
-</bootstrap-table>
+                </td>
+                <td>
+                    ${{ product.price * product.quantity | number }}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <strong>${{ totalAmount | number }}</strong>
+                </td>
+            </tr>
+        </ng-container>
+    </bootstrap-table>
 </ng-template>
 
 <ng-template #alert>
@@ -72,5 +87,3 @@
         <ng-container class="label">Shop Now</ng-container>
     </bootstrap-alert>
 </ng-template>
-
-

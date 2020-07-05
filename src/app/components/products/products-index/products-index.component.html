@@ -6,7 +6,7 @@
     <div class="col-8">
 
         <div class="row row-cols-md-1 row-cols-xl-2">
-            <bootstrap-cards-group *ngFor="let product of products; trackBy: trackProduct">
+            <bootstrap-card *ngFor="let product of products; trackBy: trackProduct">
                 <img class="selector-header card-img-top" src={{product.imageUrl}} alt="{{product.title}}">
                 <ng-container class="selector-body">
                     <div class="card-body">
@@ -36,7 +36,7 @@
 
                     </div>
                 </ng-container>
-            </bootstrap-cards-group>
+            </bootstrap-card>
         </div>
       
         <nav>

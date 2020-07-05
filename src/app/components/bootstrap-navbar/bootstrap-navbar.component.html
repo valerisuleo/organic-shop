@@ -6,7 +6,7 @@
         <div class="navbar-nav mr-auto">
             <a class="nav-item nav-link" [routerLink]="['/shopping-carts']">
                 <fa-icon [icon]="faShoppingCart"></fa-icon>
-                <span class="ml-2">
+                <span *ngIf="isLoggedIn" class="ml-2">
                     {{counter}}
                 </span>
             </a>

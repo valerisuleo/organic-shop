@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { faLeaf, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'bootstrap-navbar',
@@ -20,7 +21,8 @@ export class BootstrapNavbarComponent implements OnInit {
     constructor(
         private db: AngularFirestore,
         private authService: AuthService,
-        private service: DataService
+        private service: DataService,
+        private router: Router,
     ) { }
 
     userBucket = {
@@ -39,6 +41,8 @@ export class BootstrapNavbarComponent implements OnInit {
                             const { uid } = res;
                             localStorage.setItem('uid', uid);
                             this.createUserBucket(uid);
+                            this.displayQuantity(uid);
+
                         });
                 }
             });
@@ -59,16 +63,17 @@ export class BootstrapNavbarComponent implements OnInit {
 
     logout() {
         this.authService.signOut();
+        localStorage.clear();
+        this.router.navigate(['/login']);
+
     }
 
 
-    displayQuantity() {
-        const uid = localStorage.getItem('uid');
+    displayQuantity(uid) {
         this.service.getItem('userBucket', uid).subscribe((response: any) => this.counter = response.items.length);
     }
 
     ngOnInit(): void {
-        this.displayQuantity();
         this.checkUserStatusBeforeCreateBucket();
 
     }

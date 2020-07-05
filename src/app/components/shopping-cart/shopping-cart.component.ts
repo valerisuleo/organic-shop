@@ -23,7 +23,6 @@ export class ShoppingCartComponent implements OnInit {
     private uid: string = localStorage.getItem('uid');
     private destroyed$: Subject<boolean> = new Subject();
 
-
     constructor(
         private service: DataService,
         private router: Router,
@@ -54,8 +53,8 @@ export class ShoppingCartComponent implements OnInit {
         fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
     }
 
-    public removeItem(currentProduct: IProduct): void {        
-        if (currentProduct.quantity >= 1) {            
+    public removeItem(currentProduct: IProduct): void {
+        if (currentProduct.quantity >= 1) {
             const indexInBucket: number = this.isWhatWeDoInTheShadow.indexOf(currentProduct);
             this.isWhatWeDoInTheShadow.splice(indexInBucket, 1);
             fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
@@ -76,6 +75,10 @@ export class ShoppingCartComponent implements OnInit {
         if (data) {
             this.router.navigate(['/products']);
         }
+    }
+
+    public navigateTo(): void {
+        this.router.navigate(['check-out'], { state: { data: this.pruductsInBucket } });        
     }
 
     public ngOnInit(): void {

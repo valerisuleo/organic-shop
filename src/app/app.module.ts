@@ -17,25 +17,24 @@ import { AuthService } from './services/auth.service';
 // components
 import { AppComponent } from './app.component';
 import { ProductsIndexComponent } from './components/products/products-index/products-index.component';
-import { ProductsShowComponent } from './components/products/products-show/products-show.component';
 import { BootstrapFormComponent } from './reusable-components/bootstrap-form/bootstrap-form.component';
 import { BootstrapInputComponent } from './reusable-components/bootstrap-input/bootstrap-input.component';
 import { BootstrapSelectComponent } from './reusable-components/bootstrap-select/bootstrap-select.component';
 import { BootstrapListComponent } from './reusable-components/bootstrap-list/bootstrap-list.component';
 import { BootstrapNavbarComponent } from './components/bootstrap-navbar/bootstrap-navbar.component';
-import { BootstrapCardGroupComponent } from './reusable-components/bootstrap-card/bootstrap-cards-group.component';
+import { BootstrapCardGroupComponent } from './reusable-components/bootstrap-card/bootstrap-card.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { PaginationComponent } from './reusable-components/pagination/pagination.component';
 import { BootstrapTableComponent } from './reusable-components/bootstrap-table/bootstrap-table.component';
 import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/bootstrap-alert.component';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         ProductsIndexComponent,
-        ProductsShowComponent,
         BootstrapFormComponent,
         BootstrapInputComponent,
         BootstrapSelectComponent,
@@ -47,6 +46,7 @@ import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/b
         PaginationComponent,
         BootstrapTableComponent,
         BootstrapAlertComponent,
+        CheckOutComponent,
     ],
     imports: [
         BrowserModule,

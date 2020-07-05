@@ -6,6 +6,7 @@ import { IProduct, ICategoryMenu, IListGroup, IPagination } from '../interfaces'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'products-index',
@@ -31,6 +32,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
 
     constructor(
         private service: DataService,
+        private authService: AuthService,
         private db: AngularFirestore,
     ) { }
 
@@ -126,8 +128,8 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         current.isOpen = true;
     }
 
-    public getUserBucket(): void {
-        this.service.getItem('userBucket', this.uid)
+    public getUserBucket(uid): void {
+        this.service.getItem('userBucket', uid)
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 this.isWhatWeDoInTheShadow = response.items;
@@ -139,7 +141,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     }
 
     public addItem(current: IProduct): void {
-        const clone = {...current};
+        const clone = { ...current };
         clone.id = Date.now().toString();
         this.isWhatWeDoInTheShadow.push(clone);
         this.isWhatWeDoInTheShadow.forEach((obj, i) => obj.seqN = i + 1);
@@ -149,7 +151,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
 
     public removeItem(current: IProduct) {
         if (current.quantity >= 1) {
-            const result = this.isWhatWeDoInTheShadow.find(obj => obj.title === current.title );
+            const result = this.isWhatWeDoInTheShadow.find(obj => obj.title === current.title);
             const index = this.isWhatWeDoInTheShadow.indexOf(result);
             this.isWhatWeDoInTheShadow.splice(index, 1);
             fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: this.isWhatWeDoInTheShadow });
@@ -158,8 +160,12 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.getUserBucket();
-        this.getCategoriesMenu();
+        this.authService.getAuthState()
+            .subscribe((data: any) => {
+                const { uid } = data;
+                this.getUserBucket(uid);
+                this.getCategoriesMenu();
+            })
     }
 
     public ngOnDestroy(): void {
