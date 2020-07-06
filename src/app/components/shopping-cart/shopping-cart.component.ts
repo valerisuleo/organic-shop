@@ -78,7 +78,13 @@ export class ShoppingCartComponent implements OnInit {
     }
 
     public navigateTo(): void {
-        this.router.navigate(['check-out'], { state: { data: this.pruductsInBucket } });        
+        localStorage.setItem('pruductsInBucket', JSON.stringify(
+            {
+                totalAmount: this.totalAmount,
+                pruductsInBucket: this.pruductsInBucket
+            }
+        ));
+        this.router.navigate(['/check-out']);
     }
 
     public ngOnInit(): void {

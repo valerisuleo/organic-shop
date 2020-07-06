@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IProduct } from '../products/interfaces';
 
 @Component({
     selector: 'check-out',
@@ -7,19 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckOutComponent implements OnInit {
 
-    data = [];
-
+    public totalAmount: number;
+    public productsInBucket: IProduct[] = [];
+    
     constructor() { }
 
-    ngOnInit(): void {
-        const ls = localStorage.getItem(JSON.parse('bucket'));
-        console.log(ls);
-        
-        const { data } = history.state;
-        // localStorage.setItem('bucket', JSON.stringify(data));
-
-        // console.log(data);
-        
+    public ngOnInit(): void {
+       const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
+       this.productsInBucket = data.pruductsInBucket;
+       this.totalAmount = data.totalAmount;       
     }
 
 }

@@ -23,6 +23,7 @@ export interface ICategoryMenu {
 export interface IListGroup {
     list: any[];
     key: string;
+    isAsync?: boolean;
 }
 
 export interface ICategory {

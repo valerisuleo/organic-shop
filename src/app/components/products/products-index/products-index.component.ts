@@ -78,12 +78,6 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         this.getCollection();
     }
 
-    // TO USE FOR ADMIN PROFILE
-    // navigateTo(currentProduct: IProduct) {
-    //     this.router.navigate([`/products/${currentProduct.id}`], { state: { data: currentProduct } });
-    // }
-
-
     public getCollection(): void {
         this.service.getCollectionPaginated(this.apiEndpoint, 'seqN', "asc", this.lastPageloaded, 4)
             .pipe(takeUntil(this.destroyed$))
@@ -165,7 +159,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                 const { uid } = data;
                 this.getUserBucket(uid);
                 this.getCategoriesMenu();
-            })
+            });
     }
 
     public ngOnDestroy(): void {

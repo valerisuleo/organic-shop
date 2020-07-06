@@ -42,7 +42,7 @@ export class PaginationComponent implements OnChanges {
     }
 
     public ngOnChanges(change: SimpleChanges): void {
-        const { currentValue, firstChange } = change.currentLi;
+        const { currentValue, firstChange } = change?.currentLi;
 
         if (currentValue && !firstChange) {
             const next: string = 'Next';

@@ -24,7 +24,9 @@ export class BootstrapListComponent implements OnChanges {
 
     ngOnChanges(change: SimpleChanges): void {
         const { currentValue, firstChange } = change.props;
-        if (currentValue && !firstChange) {
+
+        if (currentValue && !firstChange ||
+            currentValue?.isAsync === false && firstChange) {
             const { list, key } = currentValue;
             this.list = list;
             this.propertyKey = key;

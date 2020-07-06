@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'bootstrap-table',
@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BootstrapTableComponent implements OnInit {
 
+    @Input() public className: string;
+    public contextualClasses: string;
+    
     constructor() { }
 
+    public getAlertClasses(): void {
+        let classes: string = 'table ';
+        if (this.className) {
+            classes += this.className;
+            this.contextualClasses = classes;
+        } else {
+            this.contextualClasses = classes;
+        }
+    }
+
     ngOnInit(): void {
+        this.getAlertClasses();
+
     }
 
 }

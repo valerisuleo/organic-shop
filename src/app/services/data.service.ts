@@ -65,9 +65,7 @@ export class DataService {
             )
     }
 
-    getItem(collectioName: string, id: string) {
-        console.log(collectioName, id);
-        
+    getItem(collectioName: string, id: string) {        
         return this.db.collection(collectioName).doc(id).valueChanges();
     }
     
