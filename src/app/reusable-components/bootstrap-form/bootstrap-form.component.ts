@@ -7,17 +7,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     styleUrls: ['./bootstrap-form.component.scss']
 })
 export class BootstrapFormComponent implements OnInit {
-    @Input() formGroup: FormGroup;
-    @Output('handleSubmit') ngSubmit = new EventEmitter();
+    public contextualClasses: string;
+    @Input() public className: string;
+    @Input() public label: string;
+    @Input() public formGroup: FormGroup;
+    @Output('handleSubmit') public ngSubmit = new EventEmitter();
 
-    inputs = [];
-    selects = [];
-    checkbox = [];
-    isSubmitted: boolean = false;
+    public inputs = [];
+    public selects = [];
+    public checkbox = [];
+    public isSubmitted: boolean = false;
 
     constructor() { }
 
-    formMaker(array) {
+    public formMaker(array) {
         let obj = {};
         array.forEach((item) => {
             const key = item.name;
@@ -30,7 +33,7 @@ export class BootstrapFormComponent implements OnInit {
         this.formPartials(array)
     }
 
-    formPartials(array) {
+    public formPartials(array) {
         array.forEach((item) => {
             if (item.type !== 'select' && item.type !== 'checkbox') {
                 this.inputs.push(item);
@@ -39,14 +42,21 @@ export class BootstrapFormComponent implements OnInit {
             } else {
                 this.selects.push(item);
             }
-        });        
+        });
     }
 
     submit() {
         this.ngSubmit.emit(this.isSubmitted = true);
     }
 
+    public getBtnClasses(): void {
+        let classes: string = 'btn ';
+        classes += this.className;
+        this.contextualClasses = classes;
+    }
+
     ngOnInit(): void {
+        this.getBtnClasses();
     }
 
 }

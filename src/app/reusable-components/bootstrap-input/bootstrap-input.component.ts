@@ -14,6 +14,11 @@ export class BootstrapInputComponent implements OnInit {
 
     constructor() { }
 
+        // ngMessages
+        get input() {
+            return this.formGroup.get(this.name);
+        }
+
     ngOnInit(): void {
     }
 

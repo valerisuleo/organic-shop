@@ -1,9 +1,22 @@
-<h2 class="m-4">Shipping</h2>
-<div class="row m-4">
-    <div class="col-7">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, quia a, unde beatae fuga facilis numquam neque cumque impedit nobis atque dolorum cupiditate iusto odit pariatur accusamus, ex eius illo.
+<div class="wrapper">
+    <h2>Shipping</h2>
+<div class="row">
+    <div class="col-6">
+        <bootstrap-form 
+            (handleSubmit)="handleSubmit($event)" 
+            [label]="'Place Order'" 
+            [formGroup]='formGroup' 
+            [className]="'organic'">
+            <bootstrap-input 
+                *ngFor="let item of inputs" 
+                [formGroup]='formGroup' 
+                [name]='item.name' 
+                [type]='item.type' 
+                [label]='item.label'>
+            </bootstrap-input>
+        </bootstrap-form>
     </div>
-    <div class="col-5">
+    <div class="col-6">
         <div class="frame">
             <h3>Order Summary</h3>
             <p>You have {{ itemsInBucket }} items in your shopping cart.</p>
@@ -43,4 +56,5 @@
             </bootstrap-table>
         </div>
     </div>
+</div>
 </div>

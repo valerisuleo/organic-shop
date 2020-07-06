@@ -3,4 +3,10 @@
         <label [for]="label">{{ label }}</label>
         <input [formControlName]="name" [type]="type" class="form-control">
     </div>
+
+     <!-- Validation error messages -->
+     <div *ngIf="input.touched && input.invalid" class="alert alert-danger">
+        <div *ngIf="input.errors.required">{{ label }} is required!</div>
+        <div *ngIf="input.errors.minlength">Minlength is {{ input.errors.minlength.requiredLength }}!</div>
+    </div>
 </ng-container>

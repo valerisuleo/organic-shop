@@ -1,5 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]='formGroup'>
     <ng-content></ng-content>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <!-- <button [disabled]="!formGroup.valid" type="submit" class="btn btn-primary">Submit</button> -->
+    <button type="submit" [ngClass]="contextualClasses" [disabled]="!formGroup.valid">
+        {{ label }}
+    </button>
 </form>

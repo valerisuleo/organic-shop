@@ -12,19 +12,14 @@ export class BootstrapTableComponent implements OnInit {
     
     constructor() { }
 
-    public getAlertClasses(): void {
+    public getTableClasses(): void {
         let classes: string = 'table ';
-        if (this.className) {
-            classes += this.className;
-            this.contextualClasses = classes;
-        } else {
-            this.contextualClasses = classes;
-        }
+        classes += this.className;
+        this.contextualClasses = classes;
     }
 
-    ngOnInit(): void {
-        this.getAlertClasses();
-
+    public ngOnInit(): void {
+        this.getTableClasses();
     }
 
 }
