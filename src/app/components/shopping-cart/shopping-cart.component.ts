@@ -81,7 +81,8 @@ export class ShoppingCartComponent implements OnInit {
         localStorage.setItem('pruductsInBucket', JSON.stringify(
             {
                 totalAmount: this.totalAmount,
-                pruductsInBucket: this.pruductsInBucket
+                pruductsInBucket: this.pruductsInBucket,
+                itemsInBucket: this.isWhatWeDoInTheShadow.length
             }
         ));
         this.router.navigate(['/check-out']);

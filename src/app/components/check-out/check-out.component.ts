@@ -9,6 +9,7 @@ import { IProduct } from '../products/interfaces';
 export class CheckOutComponent implements OnInit {
 
     public totalAmount: number;
+    public itemsInBucket: number;
     public productsInBucket: IProduct[] = [];
     
     constructor() { }
@@ -17,6 +18,7 @@ export class CheckOutComponent implements OnInit {
        const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
        this.productsInBucket = data.pruductsInBucket;
        this.totalAmount = data.totalAmount;       
+       this.itemsInBucket = data.itemsInBucket;       
     }
 
 }
