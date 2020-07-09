@@ -1,7 +1,12 @@
+import * as fsBatchedWrites from '../batched-writes';
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../products/interfaces';
 import { BootstrapFormComponent } from '../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from './form-template';
+import { AuthService } from '../../services/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { DataService } from '../../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'check-out',
@@ -11,31 +16,60 @@ import formTemplate from './form-template';
 export class CheckOutComponent extends BootstrapFormComponent implements OnInit {
 
     public totalAmount: number;
-    public itemsInBucket: number;
+    public numberOfItems: number;
+    public uid: string;
+    public isOrderSuccess: boolean = false;
     public productsInBucket: IProduct[] = [];
-    
-    constructor() { 
+
+    constructor(
+        private authService: AuthService,
+        private db: AngularFirestore,
+        private router: Router,
+        private service: DataService) {
         super()
     }
 
-    handleSubmit(isSubmitted: boolean): void {
+    private setSummary(): void {
+        const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
+        this.productsInBucket = data.pruductsInBucket;
+        this.totalAmount = data.totalAmount;
+        this.numberOfItems = data.numberOfItems;
+    }
 
+    private placeOrder(value) {
+        const collectionName: string = 'ordersPlaced';
+        const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
+        const newResource = { bucket: data, userInfo: value };
+        newResource.userInfo.id = this.uid;
+
+        this.service
+            .create(collectionName, newResource)
+            .then((res) => {
+                if (res.id) {
+                    this.isOrderSuccess = true;
+                }
+            })
+        fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: [] });
+    }
+
+    public handleSubmit(isSubmitted: boolean): void {
         if (isSubmitted) {
             const { value } = this.formGroup;
-
-            console.log(value);
-            
-
+            this.placeOrder(value);
         }
-        // this.formGroup.reset();
+        this.formGroup.reset();
+    }
+
+    handleClick(isClicked: boolean) {
+        if (isClicked) {
+            this.router.navigate(['/products']);
+        }
     }
 
     public ngOnInit(): void {
-       const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
-       this.productsInBucket = data.pruductsInBucket;
-       this.totalAmount = data.totalAmount;
-       this.itemsInBucket = data.itemsInBucket;
-       this.formMaker(formTemplate);
+        this.formMaker(formTemplate);
+        this.setSummary();
+        this.authService.getAuthState().subscribe((response: any) => this.uid = response.uid);
     }
 
 }

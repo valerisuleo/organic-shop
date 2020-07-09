@@ -1,60 +1,78 @@
-<div class="wrapper">
-    <h2>Shipping</h2>
-<div class="row">
-    <div class="col-6">
-        <bootstrap-form 
-            (handleSubmit)="handleSubmit($event)" 
-            [label]="'Place Order'" 
-            [formGroup]='formGroup' 
-            [className]="'organic'">
-            <bootstrap-input 
-                *ngFor="let item of inputs" 
-                [formGroup]='formGroup' 
-                [name]='item.name' 
-                [type]='item.type' 
-                [label]='item.label'>
-            </bootstrap-input>
-        </bootstrap-form>
-    </div>
-    <div class="col-6">
-        <div class="frame">
-            <h3>Order Summary</h3>
-            <p>You have {{ itemsInBucket }} items in your shopping cart.</p>
-            <bootstrap-table [className]="'borderless'">
-                <ng-container class="header-table">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </ng-container>
-                <ng-container class="body-table">
-                    <tr *ngFor="let item of productsInBucket">
-                        <td>
-                            {{ item.quantity }}
-                        </td>
-                        <td>x</td>
-                        <td>
-                            {{ item.title }}
-                        </td>
-                        <td>
-                            ${{ item.price * item.quantity | number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <strong>Total</strong>
-                        </td>
-                        <td></td>
-                        <td class="total">
-                            <strong>${{ totalAmount | number }}</strong>
-                        </td>
-                    </tr>
-                </ng-container>
-            </bootstrap-table>
+<ng-container *ngIf="isOrderSuccess 
+    then alert 
+    else summary">
+</ng-container>
+
+<ng-template #summary>
+    <div class="wrapper">
+        <h2>Shipping</h2>
+        <div class="row">
+            <div class="col-6">
+                <bootstrap-form (handleSubmit)="handleSubmit($event)" [label]="'Place Order'" [formGroup]='formGroup' [className]="'organic'">
+                    <bootstrap-input *ngFor="let item of inputs" [formGroup]='formGroup' [name]='item.name' [type]='item.type' [label]='item.label'>
+                    </bootstrap-input>
+                </bootstrap-form>
+            </div>
+            <div class="col-6">
+                <div class="frame">
+                    <h3>Order Summary</h3>
+                    <p>You have {{ numberOfItems }} items in your shopping cart.</p>
+                    <bootstrap-table [className]="'borderless'">
+                        <ng-container class="header-table">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </ng-container>
+                        <ng-container class="body-table">
+                            <tr *ngFor="let item of productsInBucket">
+                                <td>
+                                    {{ item.quantity }}
+                                </td>
+                                <td>x</td>
+                                <td>
+                                    {{ item.title }}
+                                </td>
+                                <td>
+                                    ${{ item.price * item.quantity | number }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <strong>Total</strong>
+                                </td>
+                                <td></td>
+                                <td class="total">
+                                    <strong>${{ totalAmount | number }}</strong>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </bootstrap-table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
+</ng-template>
+
+<ng-template #alert>
+    <div class="row d-flex justify-content-center m-5">
+        <div class="col-xl-8">
+            <bootstrap-alert [className]="'success'" (handleClick)="handleClick($event)">
+                <ng-container class="title">
+                    <h1>Thank you!</h1>
+                </ng-container>
+                <ng-container class="message">
+                    <p>We received your order and will be process within the next 24 hours!</p>
+                </ng-container>
+                <ng-container class="label">
+                    Home
+                </ng-container>
+            </bootstrap-alert>
+        </div>
+    </div>
+</ng-template>
+
+

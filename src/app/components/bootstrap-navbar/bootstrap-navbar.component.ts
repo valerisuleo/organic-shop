@@ -65,6 +65,7 @@ export class BootstrapNavbarComponent implements OnInit {
         this.authService.signOut();
         localStorage.clear();
         this.router.navigate(['/login']);
+        // here add some code to destroy userbucket if empty...
 
     }
 

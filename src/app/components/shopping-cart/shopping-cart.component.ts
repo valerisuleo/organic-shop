@@ -82,7 +82,7 @@ export class ShoppingCartComponent implements OnInit {
             {
                 totalAmount: this.totalAmount,
                 pruductsInBucket: this.pruductsInBucket,
-                itemsInBucket: this.isWhatWeDoInTheShadow.length
+                numberOfItems: this.isWhatWeDoInTheShadow.length
             }
         ));
         this.router.navigate(['/check-out']);

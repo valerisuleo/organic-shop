@@ -7,9 +7,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class BootstrapAlertComponent implements OnInit {
 
-    public contextualClasses: string;
     @Input() public className: string;
     @Output('handleClick') public click = new EventEmitter();
+    public contextualClasses: string;
 
     constructor() { }
     

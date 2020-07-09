@@ -73,5 +73,9 @@ export class DataService {
         return this.db.collection(collectioName).doc(id).set(resource);
     }
 
+    create(collectioName: string, newResource) {
+        return this.db.collection(collectioName).add(newResource)
+    }
+
 
 }
