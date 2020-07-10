@@ -42,7 +42,6 @@ export class BootstrapNavbarComponent implements OnInit {
                             localStorage.setItem('uid', uid);
                             this.createUserBucket(uid);
                             this.displayQuantity(uid);
-
                         });
                 }
             });

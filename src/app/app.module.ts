@@ -29,6 +29,7 @@ import { PaginationComponent } from './reusable-components/pagination/pagination
 import { BootstrapTableComponent } from './reusable-components/bootstrap-table/bootstrap-table.component';
 import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/bootstrap-alert.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
+import { OrderSuccessComponent } from './components/order-success/order-success.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
         BootstrapTableComponent,
         BootstrapAlertComponent,
         CheckOutComponent,
+        OrderSuccessComponent,
     ],
     imports: [
         BrowserModule,

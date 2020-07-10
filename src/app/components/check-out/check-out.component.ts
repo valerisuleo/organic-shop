@@ -18,7 +18,6 @@ export class CheckOutComponent extends BootstrapFormComponent implements OnInit 
     public totalAmount: number;
     public numberOfItems: number;
     public uid: string;
-    public isOrderSuccess: boolean = false;
     public productsInBucket: IProduct[] = [];
 
     constructor(
@@ -36,7 +35,7 @@ export class CheckOutComponent extends BootstrapFormComponent implements OnInit 
         this.numberOfItems = data.numberOfItems;
     }
 
-    private placeOrder(value) {
+    private placeOrder(value): void {
         const collectionName: string = 'ordersPlaced';
         const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
         const newResource = { bucket: data, userInfo: value };
@@ -46,9 +45,11 @@ export class CheckOutComponent extends BootstrapFormComponent implements OnInit 
             .create(collectionName, newResource)
             .then((res) => {
                 if (res.id) {
-                    this.isOrderSuccess = true;
+                    this.router.navigate(['/order-success']);
                 }
             })
+            .catch(error => console.log(error));
+            
         fsBatchedWrites.default.update(this.db, 'userBucket', this.uid, { items: [] });
     }
 
@@ -60,16 +61,9 @@ export class CheckOutComponent extends BootstrapFormComponent implements OnInit 
         this.formGroup.reset();
     }
 
-    handleClick(isClicked: boolean) {
-        if (isClicked) {
-            this.router.navigate(['/products']);
-        }
-    }
-
     public ngOnInit(): void {
         this.formMaker(formTemplate);
         this.setSummary();
         this.authService.getAuthState().subscribe((response: any) => this.uid = response.uid);
     }
-
 }

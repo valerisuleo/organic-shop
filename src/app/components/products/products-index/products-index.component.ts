@@ -25,7 +25,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     public page: number = 1;
     public pageSize: number = 4;
     public apiEndpoint: string;
-    public uid: string = localStorage.getItem('uid');
+    public uid: string;
 
     public currentLi: HTMLElement;
     private destroyed$: Subject<boolean> = new Subject();
@@ -157,6 +157,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         this.authService.getAuthState()
             .subscribe((data: any) => {
                 const { uid } = data;
+                this.uid = uid;
                 this.getUserBucket(uid);
                 this.getCategoriesMenu();
             });
