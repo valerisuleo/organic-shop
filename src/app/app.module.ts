@@ -30,6 +30,7 @@ import { BootstrapTableComponent } from './reusable-components/bootstrap-table/b
 import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/bootstrap-alert.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
+import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { OrderSuccessComponent } from './components/order-success/order-success.
         BootstrapAlertComponent,
         CheckOutComponent,
         OrderSuccessComponent,
+        AdminOrdersComponent,
     ],
     imports: [
         BrowserModule,

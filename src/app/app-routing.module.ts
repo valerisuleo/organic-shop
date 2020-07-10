@@ -5,9 +5,11 @@ import { LoginComponent } from './components/login/login.component';
 import { ProductsIndexComponent } from './components/products/products-index/products-index.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
+import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 
 
 const routes: Routes = [
+    { path: 'admin/orders', component: AdminOrdersComponent },
     { path: 'order-success', component: OrderSuccessComponent },
     { path: 'check-out', component: CheckOutComponent },
     { path: 'shopping-carts', component: ShoppingCartComponent },

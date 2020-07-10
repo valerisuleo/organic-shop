@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 
+
 @Component({
     selector: 'check-out',
     templateUrl: './check-out.component.html',
@@ -39,7 +40,10 @@ export class CheckOutComponent extends BootstrapFormComponent implements OnInit 
         const collectionName: string = 'ordersPlaced';
         const data = JSON.parse(localStorage.getItem('pruductsInBucket'));
         const newResource = { bucket: data, userInfo: value };
+        const timeStamp: Date = new Date();
+        
         newResource.userInfo.id = this.uid;
+        newResource.userInfo.timeStamp = timeStamp;
 
         this.service
             .create(collectionName, newResource)

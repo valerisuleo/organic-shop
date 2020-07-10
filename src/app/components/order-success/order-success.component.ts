@@ -16,7 +16,7 @@ export class OrderSuccessComponent implements OnInit {
         }
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
     }
 
 }

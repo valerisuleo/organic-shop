@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class BootstrapNavbarComponent implements OnInit {
 
     public isLoggedIn: boolean;
+    public displayName: string;
     public counter: number;
     public faLeaf: IconDefinition = faLeaf;
     public faShoppingCart: IconDefinition = faShoppingCart;
@@ -38,7 +39,8 @@ export class BootstrapNavbarComponent implements OnInit {
                 if (this.isLoggedIn) {
                     this.authService.getAuthState()
                         .subscribe((res: any) => {
-                            const { uid } = res;
+                            const { uid, displayName } = res;
+                            this.displayName = displayName;
                             localStorage.setItem('uid', uid);
                             this.createUserBucket(uid);
                             this.displayQuantity(uid);

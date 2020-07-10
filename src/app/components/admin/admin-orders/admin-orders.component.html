@@ -1,0 +1,33 @@
+<!-- <button class="btn btn-primary m-5" (click)="orderByName()">orderByName</button> -->
+
+<!-- <ul>
+    <li *ngFor="let item of orders">
+        {{ item.userInfo.userName }}
+    </li>
+</ul> -->
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" (click)="onSort('userInfo.userName')">
+                User Name
+            </th>
+            <th scope="col" (click)="onSort('userInfo.lineOne')">
+                Address
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of orders">
+            <td>
+                {{ item.userInfo.userName }}
+            </td>
+            <td>
+                {{ item.userInfo.lineOne }}
+            </td>
+        </tr>
+
+        
+    </tbody>
+</table>
