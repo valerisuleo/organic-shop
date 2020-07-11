@@ -11,5 +11,12 @@ export interface IOrder {
         lineOne: string;
         lineTwo: string;
         userName: string;
+        timeStamp: any;
     }
+}
+
+export interface IThLabel {
+    label: string;
+    sortPath: string;
+    isVisible: boolean;
 }

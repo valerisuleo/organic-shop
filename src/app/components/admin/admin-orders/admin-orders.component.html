@@ -1,33 +1,34 @@
-<!-- <button class="btn btn-primary m-5" (click)="orderByName()">orderByName</button> -->
+<div class="wrapper">
+    <h2>Orders</h2>
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col">
+            <bootstrap-table [className]="'borderless table-striped'">
+                <ng-container class="header-table">
+                    <tr>
+                        <th *ngFor="let item of th" scope="col">
+                            <label class="m-0" (click)="onSort(item)">{{ item.label }}</label>
+                            <span class="ml-2" *ngIf="item.isVisible">
+                                <fa-icon [icon]="faArrow"></fa-icon>
+                            </span>
+                        </th>
 
-<!-- <ul>
-    <li *ngFor="let item of orders">
-        {{ item.userInfo.userName }}
-    </li>
-</ul> -->
+                    </tr>
+                </ng-container>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col" (click)="onSort('userInfo.userName')">
-                User Name
-            </th>
-            <th scope="col" (click)="onSort('userInfo.lineOne')">
-                Address
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of orders">
-            <td>
-                {{ item.userInfo.userName }}
-            </td>
-            <td>
-                {{ item.userInfo.lineOne }}
-            </td>
-        </tr>
-
-        
-    </tbody>
-</table>
+                <ng-container class="body-table">
+                    <tr *ngFor="let item of orders">
+                        <td>
+                            {{ item.userInfo.userName }}
+                        </td>
+                        <td>
+                            {{ item.userInfo.timeStamp.seconds * 1000 | date }}
+                        </td>
+                        <td>
+                            <button class="btn btn-link" [routerLink]="['/admin/orders', item.id]">view</button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </bootstrap-table>
+        </div>
+    </div>
+</div>

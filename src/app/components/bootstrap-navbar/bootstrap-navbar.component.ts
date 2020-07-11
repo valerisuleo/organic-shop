@@ -19,6 +19,11 @@ export class BootstrapNavbarComponent implements OnInit {
     public faLeaf: IconDefinition = faLeaf;
     public faShoppingCart: IconDefinition = faShoppingCart;
 
+    userBucket = {
+        id: '',
+        items: []
+    }
+
     constructor(
         private db: AngularFirestore,
         private authService: AuthService,
@@ -26,12 +31,7 @@ export class BootstrapNavbarComponent implements OnInit {
         private router: Router,
     ) { }
 
-    userBucket = {
-        id: '',
-        items: []
-    }
-
-    checkUserStatusBeforeCreateBucket(): void {
+    public checkUserStatusBeforeCreateBucket(): void {
         this.authService.isLoggedIn()
             .subscribe((data) => {
                 this.isLoggedIn = data;
@@ -49,7 +49,7 @@ export class BootstrapNavbarComponent implements OnInit {
             });
     }
 
-    createUserBucket(uid: string): void {
+    public createUserBucket(uid: string): void {
         this.db.doc(`/userBucket/${uid}`).valueChanges()
             .subscribe((response: any) => {
                 if (!response) {
@@ -62,7 +62,7 @@ export class BootstrapNavbarComponent implements OnInit {
             });
     }
 
-    logout() {
+    public logout(): void {
         this.authService.signOut();
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -70,14 +70,12 @@ export class BootstrapNavbarComponent implements OnInit {
 
     }
 
-
-    displayQuantity(uid) {
+    public displayQuantity(uid): void {
         this.service.getItem('userBucket', uid).subscribe((response: any) => this.counter = response.items.length);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.checkUserStatusBeforeCreateBucket();
-
     }
 
 }
