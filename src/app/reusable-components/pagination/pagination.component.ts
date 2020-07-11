@@ -26,7 +26,6 @@ export class PaginationComponent implements OnChanges {
 
     public getNextSetOfItems(): void {
         this.lastPageloaded = this.lastPageloaded + 1;
-        // do Something: call getCollection
         this.click.emit({
             name: 'next',
             lastPageloaded: this.lastPageloaded

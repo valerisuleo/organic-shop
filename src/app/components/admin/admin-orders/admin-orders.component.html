@@ -1,4 +1,53 @@
 <div class="wrapper">
+    <!-- MODAL -->
+    <div *ngIf="isOpen" (click)="closeModal($event)" class="modal-container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card-body text-center">
+                    <h1 class="card-title">${{ order.bucket.totalAmount | number }}</h1>
+                    <p class="card-text">Amount</p>
+                    <p class="card-text">Customer <span>{{ order.userInfo.userName }}</span></p>
+                    <p class="card-text">Date <span>{{ order.userInfo.timeStamp.seconds * 1000 | date }}</span></p>
+                    <p class="card-text">Due <span>TBD</span></p>
+                    <p class="card-text">Method <span>Check</span></p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card-body pr-5">
+                    <div class="table-wrap">
+                        <bootstrap-table [className]="'borderless'">
+                            <ng-container class="header-table">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </ng-container>
+
+                            <ng-container class="body-table">
+                                <tr *ngFor="let item of order.bucket.pruductsInBucket">
+                                    <td>
+                                        <img src="{{item.imageUrl}}" alt="">
+                                    </td>
+                                    <td>
+                                        {{ item.title }}
+                                    </td>
+                                    <td>
+                                        ${{ item.price }}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </bootstrap-table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END MODAL -->
+
     <h2>Orders</h2>
     <div class="row d-flex justify-content-center mt-5">
         <div class="col">
@@ -24,7 +73,10 @@
                             {{ item.userInfo.timeStamp.seconds * 1000 | date }}
                         </td>
                         <td>
-                            <button class="btn btn-link" [routerLink]="['/admin/orders', item.id]">view</button>
+                            #<em>{{ item.id }}</em>
+                        </td>
+                        <td>
+                            <button (click)="getOrderDetail(item.id)" class="btn btn-link">view</button>
                         </td>
                     </tr>
                 </ng-container>

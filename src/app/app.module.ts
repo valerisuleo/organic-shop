@@ -31,7 +31,6 @@ import { BootstrapAlertComponent } from './reusable-components/bootstrap-alert/b
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
-import { AdminOrdersDetailsComponent } from './components/admin/admin-orders-details/admin-orders-details.component';
 
 
 @NgModule({
@@ -52,7 +51,6 @@ import { AdminOrdersDetailsComponent } from './components/admin/admin-orders-det
         CheckOutComponent,
         OrderSuccessComponent,
         AdminOrdersComponent,
-        AdminOrdersDetailsComponent,
     ],
     imports: [
         BrowserModule,

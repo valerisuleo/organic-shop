@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { IOrder, IThLabel } from '../interfaces';
 import { OrderByDirection } from '@firebase/firestore-types';
@@ -15,18 +15,19 @@ import { faArrowUp, faArrowDown, IconDefinition } from '@fortawesome/free-solid-
 export class AdminOrdersComponent implements OnInit {
 
     public th: IThLabel[] = [];
+    public order: IOrder;
     public orders: IOrder[] = [];
 
-    private isUp: boolean = true;
+    private isArrowUp: boolean = true;
+    public isOpen: boolean = false;
     public faArrow: IconDefinition = faArrowUp;
     private destroyed$: Subject<boolean> = new Subject();
 
     constructor(private service: DataService) { }
 
-
     public thMaker(): void {
-        const labels = ['Customers', 'Date', ''];
-        const sortColPath = ['userInfo.userName', 'userInfo.timeStamp.seconds', ''];
+        const labels = ['Customers', 'Date', 'Track Number', ''];
+        const sortColPath = ['userInfo.userName', 'userInfo.timeStamp.seconds', 'id', ''];
 
         this.th = labels.map((item, i) => {
             return {
@@ -38,8 +39,7 @@ export class AdminOrdersComponent implements OnInit {
     }
 
     public getOrders(): void {
-        const collection = 'ordersPlaced';
-        this.service.getAll(collection)
+        this.service.getAll('ordersPlaced')
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 this.orders = response;
@@ -53,14 +53,30 @@ export class AdminOrdersComponent implements OnInit {
             currentCol.isVisible = true;
         };
 
-        this.isUp = !this.isUp;
+        this.isArrowUp = !this.isArrowUp;
 
         const sortColPath = currentCol ? currentCol.sortPath : 'userInfo.userName';
-        const sortColOrder: OrderByDirection = this.isUp ? "desc" : "asc";
-        this.faArrow = this.isUp ? faArrowDown : faArrowUp;
+        const sortColOrder: OrderByDirection = this.isArrowUp ? "desc" : "asc";
+        this.faArrow = this.isArrowUp ? faArrowDown : faArrowUp;
 
         const sorted: IOrder[] = _.orderBy(this.orders, sortColPath, sortColOrder);
         this.orders = sorted;
+    }
+
+    public getOrderDetail(id: string): void {
+        this.service.getItem('ordersPlaced', id)
+            .subscribe((response: any) => {
+                this.order = response;
+                this.isOpen = true;
+            });
+    }
+
+    public closeModal(e): void {
+        const current: HTMLElement = e.target;
+        const insideArea: boolean = current.classList.contains('card-body');
+        if (!insideArea) {
+            this.isOpen = false;
+        }
     }
 
     public ngOnInit(): void {

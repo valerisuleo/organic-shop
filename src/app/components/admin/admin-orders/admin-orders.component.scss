@@ -1,9 +1,15 @@
 tr {
     td {
         vertical-align: middle;
+
+        img {
+            max-width: 100%;
+        }
     }
 
     th {
+        border: 0px !important;
+
         label {
             cursor: pointer;
         }
@@ -13,4 +19,61 @@ tr {
 
 .wrapper {
     padding: 3% 7% 5% 7%;
+
+    .modal-container {
+        left: 0;
+        top: 0;
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        overflow-y: scroll;
+        z-index: 5;
+
+        .row {
+            height: 400px;
+            width: 750px;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            background-color: white;
+        }
+    }
+}
+
+.col-md-6 {
+    position: relative;
+}
+
+.card-body {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+
+    p {
+        color: silver;
+
+        &:nth-of-type(2) {
+            span {
+                color: dodgerblue;
+            }
+        }
+
+        span {
+            color: black;
+        }
+    }
+}
+
+.table-wrap {
+    height: 300px;
+    overflow-y: auto;
 }
