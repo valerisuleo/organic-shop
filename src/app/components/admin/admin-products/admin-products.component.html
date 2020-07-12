@@ -1,1 +1,44 @@
-<p>admin-products works!</p>
+<bootstrap-table [className]="'table-striped'">
+
+    <ng-container class="header-table">
+        <tr>
+            <th *ngFor="let item of th" scope="col">
+                <label class="m-0" (click)="onSort(item)">{{ item.label }}</label>
+                <span class="ml-2" *ngIf="item.isVisible">
+                    <fa-icon [icon]="faArrow"></fa-icon>
+                </span>
+            </th>
+        </tr>
+    </ng-container>
+
+    <ng-container class="body-table">
+        <tr *ngFor="let item of stock">
+            <td>
+                {{ item.title }}
+            </td>
+            <td>
+                ${{ item.price | number }}
+            </td>
+            <td>
+                <button class="btn btn-link">Edit</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td *ngIf="collectionSize">
+                <ngbootstrap-pagination
+                    [collectionSize]="collectionSize" 
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [lastPageloaded]="lastPageloaded"
+                    (click)="getCurrent($event)"
+                    [currentLi]='currentLi'
+                    (handlePagination)='handlePagination($event)'
+                >
+                </ngbootstrap-pagination>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </ng-container>
+</bootstrap-table>

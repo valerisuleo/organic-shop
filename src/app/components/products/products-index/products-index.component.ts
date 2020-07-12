@@ -24,10 +24,11 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     public collectionSize: number = 6;
     public page: number = 1;
     public pageSize: number = 4;
+    public currentLi: HTMLElement;
+
     public apiEndpoint: string;
     public uid: string;
 
-    public currentLi: HTMLElement;
     private destroyed$: Subject<boolean> = new Subject();
 
     constructor(
