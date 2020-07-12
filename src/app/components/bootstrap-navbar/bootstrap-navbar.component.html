@@ -19,7 +19,7 @@
                     <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>{{ displayName }}</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button ngbDropdownItem [routerLink]="['/admin/orders']">Manage Orders</button>
-                        <button ngbDropdownItem>Another Action</button>
+                        <button ngbDropdownItem [routerLink]="['/admin/products']">Manage Products</button>
                         <button ngbDropdownItem (click)="logout()">Log Out</button>
                     </div>
                 </div>

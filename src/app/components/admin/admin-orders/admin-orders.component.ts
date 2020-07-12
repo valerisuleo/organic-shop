@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { IOrder, IThLabel } from '../interfaces';
 import { OrderByDirection } from '@firebase/firestore-types';
@@ -12,7 +12,7 @@ import { faArrowUp, faArrowDown, IconDefinition } from '@fortawesome/free-solid-
     templateUrl: './admin-orders.component.html',
     styleUrls: ['./admin-orders.component.scss']
 })
-export class AdminOrdersComponent implements OnInit {
+export class AdminOrdersComponent implements OnInit, OnDestroy {
 
     public th: IThLabel[] = [];
     public order: IOrder;

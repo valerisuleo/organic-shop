@@ -1,6 +1,6 @@
 import * as fsBatchedWrites from '../batched-writes';
 import * as utilitiesArray from '../utilities-array';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { takeUntil } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     templateUrl: './shopping-cart.component.html',
     styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     public pruductsInBucket: IProduct[];
     public isWhatWeDoInTheShadow: IProduct[] =[];
