@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IThLabel } from '../interfaces';
 import { faArrowUp, faArrowDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OrderByDirection } from '@firebase/firestore-types';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'admin-products',
@@ -25,10 +26,12 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     public stock: IProduct[] = [];
     public th: IThLabel[] = [];
     public apiEndPoints: string[] = [];
+    public query: string;
     private isArrowUp: boolean = true;
     private destroyed$: Subject<boolean> = new Subject();
 
-    constructor(private service: DataService) { }
+
+    constructor(private service: DataService, private router: Router) { }
 
     private pathMaker(string, id: string): string {
         const subPath: string = string.replace(/ /g, '').toLowerCase();
@@ -96,6 +99,10 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
         const sorted: IProduct[] = _.orderBy(this.stock, sortColPath, sortColOrder);
         this.stock = sorted;
+    }
+
+    navigateTo(item) {
+        this.router.navigate([`/admin/products/edit/${item.id}`], { state: { data: item } });
     }
 
     // _________________________HANDLE PAGINATION_________________________

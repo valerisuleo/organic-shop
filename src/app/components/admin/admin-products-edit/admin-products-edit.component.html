@@ -1,0 +1,41 @@
+<div class="row d-flex justify-content-center mt-5" *ngIf="categories.length > 0">
+    <div class="col-9">
+        <div class="row">
+            <div class="col-md-12 col-xl-6">
+                <bootstrap-form 
+                    (handleSubmit)="handleSubmit($event)" 
+                    [label]="'Save'"
+                    [className]="'organic'"
+                    [formGroup]='formGroup'>
+                    
+                    <bootstrap-input 
+                        *ngFor="let item of inputs" 
+                        [formGroup]='formGroup' 
+                        [name]='item.name' 
+                        [type]='item.type' 
+                        [label]='item.label'>
+                    </bootstrap-input>
+        
+                    <bootstrap-select *ngFor="let item of selects" 
+                        [formGroup]='formGroup'
+                        [options]='categories' 
+                        [optionKey]="'name'" 
+                        [name]='item.name' 
+                        [label]='item.label'>
+                    </bootstrap-select>
+                </bootstrap-form>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <bootstrap-card>
+                    <ng-container class="selector-header">
+                        <img class="card-img-top" src="{{product?.imageUrl}}" alt="">
+                    </ng-container>
+                    <ng-container class="selector-body">
+                        <h5 class="card-title text-center">{{ product?.title }}</h5>
+                        <p class="card-text text-center mb-5">${{ product?.price | number }}</p>
+                    </ng-container>
+                </bootstrap-card>
+            </div>
+        </div>
+    </div>
+</div>

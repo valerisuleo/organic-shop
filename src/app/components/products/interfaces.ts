@@ -28,7 +28,7 @@ export interface IListGroup {
 
 export interface ICategory {
     name: string;
-    id: number;
+    id: string;
 }
 
 export interface IBucketMap {

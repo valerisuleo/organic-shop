@@ -32,6 +32,8 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { FilterPipe } from './components/admin/filter.pipe';
+import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
         OrderSuccessComponent,
         AdminOrdersComponent,
         AdminProductsComponent,
+        FilterPipe,
+        AdminProductsEditComponent,
     ],
     imports: [
         BrowserModule,
@@ -63,7 +67,8 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
         ReactiveFormsModule,
         NgbModule,
         AngularFireAuthModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        FormsModule
     ],
     providers: [
         DataService,
