@@ -37,7 +37,7 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
                         name: obj.categoryName,
                         id: obj.id,
                     }
-                });                
+                });
                 this.getProduct();
             });
     }

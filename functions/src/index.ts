@@ -13,7 +13,7 @@ function categoryTransaction(snap: any, cb: Function) {
     });
 }
 
-const createSubCategoryItem = functions.firestore
+const onAddItemToSubCategory = functions.firestore
     .document('categories/{categoryId}/{subCategory}/{subCategoryId}')
     .onCreate(async (snap, context) => {
         return categoryTransaction(snap, (category: any) => {
@@ -21,6 +21,15 @@ const createSubCategoryItem = functions.firestore
         });
     });
 
+const onDeleteItemToSubCategory = functions.firestore
+    .document('categories/{categoryId}/{subCategory}/{subCategoryId}')
+    .onDelete(async (snap, context) => {
+        return categoryTransaction(snap, (category: any) => {
+            return { collectionSize: category.collectionSize - 1 }
+        });
+    });
+
 export default {
-    getCollectionSize: createSubCategoryItem
+    onAdd: onAddItemToSubCategory,
+    onDelete: onDeleteItemToSubCategory
 };
