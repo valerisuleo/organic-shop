@@ -34,6 +34,7 @@ import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orde
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { FilterPipe } from './components/admin/filter.pipe';
 import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
+import { AdminProductsNewComponent } from './components/admin/admin-products-new/admin-products-new.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { AdminProductsEditComponent } from './components/admin/admin-products-ed
         AdminProductsComponent,
         FilterPipe,
         AdminProductsEditComponent,
+        AdminProductsNewComponent,
     ],
     imports: [
         BrowserModule,

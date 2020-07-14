@@ -6,6 +6,7 @@ import { OrderByDirection } from '@firebase/firestore-types';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { faArrowUp, faArrowDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'admin-orders',
@@ -23,7 +24,7 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
     public faArrow: IconDefinition = faArrowUp;
     private destroyed$: Subject<boolean> = new Subject();
 
-    constructor(private service: DataService) { }
+    constructor(private service: DataService, private location: Location) { }
 
     public thMaker(): void {
         const labels = ['Customers', 'Date', 'Track Number', ''];
@@ -76,6 +77,12 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
         const insideArea: boolean = current.classList.contains('card-body');
         if (!insideArea) {
             this.isOpen = false;
+        }
+    }
+
+    public handleClick(isClicked: boolean): void {
+        if (isClicked) {
+            this.location.back();
         }
     }
 

@@ -8,10 +8,12 @@ import { OrderSuccessComponent } from './components/order-success/order-success.
 import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
+import { AdminProductsNewComponent } from './components/admin/admin-products-new/admin-products-new.component';
 
 const routes: Routes = [
     // admin module
     { path: 'admin/products/edit/:id', component: AdminProductsEditComponent },
+    { path: 'admin/products/new', component: AdminProductsNewComponent },
     { path: 'admin/products', component: AdminProductsComponent },
     { path: 'admin/orders', component: AdminOrdersComponent },
     // user module

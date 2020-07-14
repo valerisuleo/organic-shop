@@ -86,22 +86,24 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
 
             if (clone.category === value.categories.name) {
                 this.service.updateItem(collectionPath, `/${clone.id}`, clone);
+                this.router.navigate(['/admin/products']);
             } else {
                 clone.category = value.categories.name;
-
+                
                 this.service.getCollectionOrderBy(collectionPath, 'seqN', "desc")
-                    .pipe(takeUntil(this.destroyed$))
-                    .subscribe((response: any) => {
-
-                        const seqNHighest = response[0].seqN;
-                        clone.seqN = seqNHighest + 1;
-
-                        const prevCategory: ICategory = this.categories.find((obj) => obj.name === this.product.category);
-                        const originalPath: string = this.pathMaker(prevCategory.name, prevCategory.id);
-
-                        fsBatchedWrites.default.remove(this.db, originalPath, clone.id);
-                        fsBatchedWrites.default.create(this.db, collectionPath, clone.id, clone);
-                    });
+                .pipe(takeUntil(this.destroyed$))
+                .subscribe((response: any) => {
+                    
+                    const seqNHighest = response[0].seqN;
+                    clone.seqN = seqNHighest + 1;
+                    
+                    const prevCategory: ICategory = this.categories.find((obj) => obj.name === this.product.category);
+                    const originalPath: string = this.pathMaker(prevCategory.name, prevCategory.id);
+                    
+                    fsBatchedWrites.default.remove(this.db, originalPath, clone.id);
+                    fsBatchedWrites.default.create(this.db, collectionPath, clone.id, clone);
+                    this.router.navigate(['/admin/products']);
+                });
             }
         }
     }
