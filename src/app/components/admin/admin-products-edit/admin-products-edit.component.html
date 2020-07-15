@@ -8,6 +8,7 @@
                     [label]="'Save'"
                     [className]="'organic'"
                     [deleteBtn]="true"
+                    [isLoading]="isLoading"
                     [formGroup]='formGroup'>
                     
                     <bootstrap-input 
@@ -25,6 +26,7 @@
                         [name]='item.name' 
                         [label]='item.label'>
                     </bootstrap-select>
+
                 </bootstrap-form>
             </div>
             <div class="col-md-12 col-xl-6">

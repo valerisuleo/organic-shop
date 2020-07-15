@@ -20,7 +20,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     public lastPageloaded: number = 0;
     public collectionSize: number;
     public page: number = 1;
-    public pageSize: number = 6;
+    public pageSize: number = 4;
     public currentLi: HTMLElement;
 
     public faArrow: IconDefinition = faArrowUp;
@@ -34,12 +34,17 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     constructor(private service: DataService, private router: Router) { }
 
     private getEndpoints(): void {
-        this.service.getAll('categories')
+        this.service
+            .getAll('categories')
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 this.sumValuesObjArray(response);
-                this.apiEndPoints = response.map((obj) => {
-                    return utilities.default.pathMaker(obj.categoryName, obj.id);
+
+                response.forEach((obj) => {
+                    if (obj.collectionSize > 0) {
+                        const path = utilities.default.pathMaker(obj.categoryName, obj.id);
+                        this.apiEndPoints.push(path);
+                    }
                 });
                 this.getCollections();
             });
@@ -47,13 +52,12 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
     private getCollections(): void {
         const all: IProduct[] = [];
+
         this.apiEndPoints.forEach((apiEndPoint: string) => {
             this.service
-                .getCollectionPaginated(apiEndPoint, 'seqN', "asc", this.lastPageloaded, 3)
+                .getCollectionPaginated(apiEndPoint, 'seqN', "asc", this.lastPageloaded, 4)
                 .subscribe((response: any) => {
-                    response.forEach((item: IProduct) => {
-                        all.push(item);
-                    });
+                    response.forEach((item: IProduct) => all.push(item));
                     this.stock = all;
                     this.stock = this.stock.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
                 });

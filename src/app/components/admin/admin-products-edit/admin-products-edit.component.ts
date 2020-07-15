@@ -9,7 +9,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'admin-products-edit',
@@ -20,6 +19,7 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
 
     public categories: ICategory[] = [];
     public product: IProduct;
+    public isLoading: boolean;
     private destroyed$: Subject<boolean> = new Subject();
 
     constructor(
@@ -40,7 +40,7 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
                     }
                 });
                 this.getProduct();
-            });
+            }, error => console.log(error));
     }
 
     private getProduct(): void {
@@ -99,7 +99,7 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
                         fsBatchedWrites.default.remove(this.db, originalPath, clone.id);
                         fsBatchedWrites.default.create(this.db, collectionPath, clone.id, clone);
                         this.router.navigate(['/admin/products']);
-                    });
+                    }, error => console.log(error));
             }
         }
     }
@@ -110,18 +110,18 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
             const categoryObj: ICategory = this.categories.find((obj) => obj.name === category);
             const collectionPath = utilities.default.pathMaker(category, categoryObj.id);
 
-            this.service.delete(collectionPath, id)
+            this.service
+                .delete(collectionPath, id)
                 .then()
-                .catch((err) => {
-                    if (!err) {
-                        console.log('no err');
-                    }
-                });
+                .catch(err => console.log(err));
 
             fsBatchedWrites.default.resetSeqNum(this.db, collectionPath);
+            this.isLoading = true;
+            // we need time some time to update the seqN.
             setTimeout(() => {
+                this.isLoading = false;
                 this.router.navigate(['/admin/products']);
-            }, 1000);
+            }, 3000);
         }
     }
 

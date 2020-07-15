@@ -23,7 +23,6 @@
             </ng-container>
         
             <ng-container class="body-table">
-                <!-- <tr *ngFor="let item of groupsAll | filter : query"> -->
                 <tr *ngFor="let item of stock | filter : query">
                     <td>
                         {{ item.title }}
@@ -54,5 +53,3 @@
         </bootstrap-table>
     </div>
 </div>
-
-<!-- {{ groupsAll | json }} -->

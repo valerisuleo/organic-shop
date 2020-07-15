@@ -1,7 +1,8 @@
 <form (ngSubmit)="submit()" [formGroup]='formGroup'>
     <ng-content></ng-content>
-    <button type="submit" [ngClass]="contextualClasses" [disabled]="!formGroup.valid">
-        {{ label }}
-    </button>
-    <button *ngIf="deleteBtn" (click)="deleteItem()" type="button" class="btn btn-danger ml-3">Delete</button>
+    <button type="submit" [ngClass]="contextualClasses" [disabled]="!formGroup.valid || isLoading">{{ label }}</button>
+      <button *ngIf="deleteBtn" (click)="deleteItem()" class="btn btn-danger ml-3" type="button" [disabled]="isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Delete
+      </button>
 </form>

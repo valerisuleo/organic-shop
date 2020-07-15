@@ -7,17 +7,19 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     styleUrls: ['./bootstrap-form.component.scss']
 })
 export class BootstrapFormComponent implements OnInit {
-    public contextualClasses: string;
+
     @Input() public className: string;
     @Input() public label: string;
     @Input() public deleteBtn: boolean;
+    @Input() public isLoading: boolean;
     @Input() public formGroup: FormGroup;
     @Output('handleSubmit') public ngSubmit = new EventEmitter();
     @Output('handleDelete') public click = new EventEmitter();
-
+    
     public inputs = [];
     public selects = [];
     public checkbox = [];
+    public contextualClasses: string;
     public isSubmitted: boolean = false;
 
     constructor() { }

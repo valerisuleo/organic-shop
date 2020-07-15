@@ -36,7 +36,7 @@ async function resetSeqNum(db, path) {
 
         responseWithId.forEach((el, index) => {
             const ref = db.doc(`/${path}/${el.id}`).ref;
-            const obj = { seqN: index };
+            const obj = { seqN: index + 1 };
             batch.update(ref, obj);
         });
         batch.commit();
