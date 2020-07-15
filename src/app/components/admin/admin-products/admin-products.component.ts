@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as utilities from '../../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { IProduct, IPagination } from '../../products/interfaces';
@@ -30,13 +31,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     private isArrowUp: boolean = true;
     private destroyed$: Subject<boolean> = new Subject();
 
-
     constructor(private service: DataService, private router: Router) { }
-
-    private pathMaker(string, id: string): string {
-        const subPath: string = string.replace(/ /g, '').toLowerCase();
-        return `categories/${id}/${subPath}`;
-    }
 
     private getEndpoints(): void {
         this.service.getAll('categories')
@@ -44,7 +39,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
             .subscribe((response: any) => {
                 this.sumValuesObjArray(response);
                 this.apiEndPoints = response.map((obj) => {
-                    return this.pathMaker(obj.categoryName, obj.id);
+                    return utilities.default.pathMaker(obj.categoryName, obj.id);
                 });
                 this.getCollections();
             });
@@ -60,6 +55,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
                         all.push(item);
                     });
                     this.stock = all;
+                    this.stock = this.stock.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
                 });
         });
     }
@@ -112,8 +108,10 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
     public handlePagination(data: IPagination): void {
         const { name, lastPageloaded } = data;
-        this.lastPageloaded = lastPageloaded;
-        this.getCollections();
+        setTimeout(() => {
+            this.lastPageloaded = lastPageloaded;
+            this.getCollections();
+        }, 500);
     }
 
     public ngOnInit(): void {

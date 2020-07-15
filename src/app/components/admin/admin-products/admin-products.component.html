@@ -1,6 +1,7 @@
 <div class="row d-flex justify-content-center mt-5">
     <div class="col-xl-9">
         <button class="btn btn-primary btn-lg mb-5" [routerLink]="['/admin/products/new']">Add Product</button>
+        
         <bootstrap-table [className]="'table-striped'">
 
             <ng-container class="header-table">
@@ -22,6 +23,7 @@
             </ng-container>
         
             <ng-container class="body-table">
+                <!-- <tr *ngFor="let item of groupsAll | filter : query"> -->
                 <tr *ngFor="let item of stock | filter : query">
                     <td>
                         {{ item.title }}
@@ -52,3 +54,5 @@
         </bootstrap-table>
     </div>
 </div>
+
+<!-- {{ groupsAll | json }} -->

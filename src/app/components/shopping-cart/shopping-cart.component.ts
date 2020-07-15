@@ -1,5 +1,5 @@
 import * as fsBatchedWrites from '../batched-writes';
-import * as utilitiesArray from '../utilities-array';
+import * as utilities from '../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataService } from '../../services/data.service';
@@ -35,13 +35,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
             .subscribe((response: any) => {
                 const { items } = response;
                 this.isWhatWeDoInTheShadow = items;
-                const data = utilitiesArray.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
+                const data = utilities.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
 
                 this.isWhatWeDoInTheShadow.forEach((obj: IProduct) => {
                     obj.quantity = data[obj.title]?.length;
                 });
 
-                this.pruductsInBucket = utilitiesArray.default.removeDuplicates(this.isWhatWeDoInTheShadow, 'title');
+                this.pruductsInBucket = utilities.default.removeDuplicates(this.isWhatWeDoInTheShadow, 'title');
                 this.getTotalAmount(this.pruductsInBucket);
             });
     }

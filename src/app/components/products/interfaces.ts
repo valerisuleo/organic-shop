@@ -1,15 +1,14 @@
 export interface IProduct {
-    title: string;
-    imageUrl: string;
-    price: number;
-    categories: ICategory[];
-    category: string;
-    id: string;
-    count: number;
-    isOpen: boolean;
-    seqN: number;
-    inStock: number;
+    count?: number;
+    isOpen?: boolean;
     quantity?: number;
+    category: string;
+    id?: string;
+    imageUrl: string;
+    // inStock: number;
+    price: number;
+    seqN: number;
+    title: string;
 }
 
 export interface ICategoryMenu {

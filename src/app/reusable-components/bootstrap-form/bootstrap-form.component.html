@@ -3,4 +3,5 @@
     <button type="submit" [ngClass]="contextualClasses" [disabled]="!formGroup.valid">
         {{ label }}
     </button>
+    <button *ngIf="deleteBtn" (click)="deleteItem()" type="button" class="btn btn-danger ml-3">Delete</button>
 </form>

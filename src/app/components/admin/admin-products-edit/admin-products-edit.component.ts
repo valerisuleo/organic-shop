@@ -1,3 +1,4 @@
+import * as utilities from '../../utilities';
 import * as fsBatchedWrites from '../../batched-writes';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
@@ -68,17 +69,12 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
         return this.categories.find(item => item.name.toLowerCase() === current);
     }
 
-    public pathMaker(string, id: string): string {
-        const subPath: string = string.replace(/ /g, '').toLowerCase();
-        return `categories/${id}/${subPath}`;
-    }
-
     public handleSubmit(isSubmitted: boolean): void {
         if (isSubmitted) {
             const clone = { ...this.product };
             const { value } = this.formGroup;
             const { id, name } = value.categories;
-            const collectionPath = this.pathMaker(name, id);
+            const collectionPath = utilities.default.pathMaker(name, id);
 
             clone.imageUrl = value.imageUrl;
             clone.price = value.price;
@@ -89,22 +85,43 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
                 this.router.navigate(['/admin/products']);
             } else {
                 clone.category = value.categories.name;
-                
+
                 this.service.getCollectionOrderBy(collectionPath, 'seqN', "desc")
-                .pipe(takeUntil(this.destroyed$))
-                .subscribe((response: any) => {
-                    
-                    const seqNHighest = response[0].seqN;
-                    clone.seqN = seqNHighest + 1;
-                    
-                    const prevCategory: ICategory = this.categories.find((obj) => obj.name === this.product.category);
-                    const originalPath: string = this.pathMaker(prevCategory.name, prevCategory.id);
-                    
-                    fsBatchedWrites.default.remove(this.db, originalPath, clone.id);
-                    fsBatchedWrites.default.create(this.db, collectionPath, clone.id, clone);
-                    this.router.navigate(['/admin/products']);
-                });
+                    .pipe(takeUntil(this.destroyed$))
+                    .subscribe((response: any) => {
+
+                        const seqNHighest = response[0].seqN;
+                        clone.seqN = seqNHighest + 1;
+
+                        const prevCategory: ICategory = this.categories.find((obj) => obj.name === this.product.category);
+                        const originalPath: string = utilities.default.pathMaker(prevCategory.name, prevCategory.id)
+
+                        fsBatchedWrites.default.remove(this.db, originalPath, clone.id);
+                        fsBatchedWrites.default.create(this.db, collectionPath, clone.id, clone);
+                        this.router.navigate(['/admin/products']);
+                    });
             }
+        }
+    }
+
+    public handleDelete(isClicked: boolean): void {
+        if (isClicked) {
+            const { id, category } = this.product;
+            const categoryObj: ICategory = this.categories.find((obj) => obj.name === category);
+            const collectionPath = utilities.default.pathMaker(category, categoryObj.id);
+
+            this.service.delete(collectionPath, id)
+                .then()
+                .catch((err) => {
+                    if (!err) {
+                        console.log('no err');
+                    }
+                });
+
+            fsBatchedWrites.default.resetSeqNum(this.db, collectionPath);
+            setTimeout(() => {
+                this.router.navigate(['/admin/products']);
+            }, 1000);
         }
     }
 

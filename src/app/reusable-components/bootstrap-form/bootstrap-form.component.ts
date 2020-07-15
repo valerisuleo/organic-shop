@@ -10,8 +10,10 @@ export class BootstrapFormComponent implements OnInit {
     public contextualClasses: string;
     @Input() public className: string;
     @Input() public label: string;
+    @Input() public deleteBtn: boolean;
     @Input() public formGroup: FormGroup;
     @Output('handleSubmit') public ngSubmit = new EventEmitter();
+    @Output('handleDelete') public click = new EventEmitter();
 
     public inputs = [];
     public selects = [];
@@ -45,8 +47,12 @@ export class BootstrapFormComponent implements OnInit {
         });
     }
 
-    submit() {
+    public submit(): void {
         this.ngSubmit.emit(this.isSubmitted = true);
+    }
+
+    public deleteItem(): void {
+        this.click.emit(true)
     }
 
     public getBtnClasses(): void {

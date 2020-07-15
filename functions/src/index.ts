@@ -29,7 +29,8 @@ const onDeleteItemToSubCategory = functions.firestore
         });
     });
 
+
 export default {
     onAdd: onAddItemToSubCategory,
-    onDelete: onDeleteItemToSubCategory
+    onDelete: onDeleteItemToSubCategory,
 };

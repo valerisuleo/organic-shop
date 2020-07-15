@@ -1,5 +1,5 @@
 import * as fsBatchedWrites from '../../batched-writes';
-import * as utilitiesArray from '../../utilities-array';
+import * as utilities from '../../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { IProduct, ICategoryMenu, IListGroup, IPagination } from '../interfaces';
@@ -44,7 +44,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
                 const defaultCategory: ICategoryMenu = this.getDefaultCollection(response, 'categoryName', 'Bread');
                 const { id, categoryName } = defaultCategory;
 
-                this.apiEndpoint = this.pathMaker(categoryName, id);
+                this.apiEndpoint = utilities.default.pathMaker(categoryName, id);
                 this.getCollection();
 
                 const addCssClass = response.map((item: any) => {
@@ -63,18 +63,13 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         });
     }
 
-    public pathMaker(string, id: string): string {
-        const subPath: string = string.replace(/ /g, '').toLowerCase();
-        return `categories/${id}/${subPath}`;
-    }
-
     public handleSelectedLi(obj: ICategoryMenu): void {
         const { id, categoryName, collectionSize } = obj;
         // reset
         this.products = [];
         this.lastPageloaded = 0;
         //
-        this.apiEndpoint = this.pathMaker(categoryName, id)
+        this.apiEndpoint = utilities.default.pathMaker(categoryName, id);
         this.collectionSize = collectionSize;
         this.getCollection();
     }
@@ -128,7 +123,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
                 this.isWhatWeDoInTheShadow = response.items;
-                const data = utilitiesArray.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
+                const data = utilities.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
                 this.isWhatWeDoInTheShadow.forEach((obj: IProduct) => {
                     obj.quantity = data[obj.title]?.length;
                 });

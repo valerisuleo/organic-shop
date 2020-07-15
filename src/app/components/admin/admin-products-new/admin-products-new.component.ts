@@ -1,10 +1,12 @@
+import * as utilities from '../../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BootstrapFormComponent } from '../../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from '../admin-products-edit/form-template';
-import { ICategory } from '../../products/interfaces';
+import { ICategory, IProduct } from '../../products/interfaces';
 import { Subject } from 'rxjs';
 import { DataService } from '../../../services/data.service';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'admin-products-new',
@@ -16,14 +18,13 @@ export class AdminProductsNewComponent extends BootstrapFormComponent implements
     public categories: ICategory[] = [];
     private destroyed$: Subject<boolean> = new Subject();
 
-
-
-    constructor(private service: DataService,) {
+    constructor(private service: DataService, private router: Router) {
         super()
     }
 
     private getCategories(): void {
-        this.service.getAll('categories')
+        this.service
+            .getAll('categories')
             .pipe(takeUntil(this.destroyed$))
             .subscribe((res: any) => {
                 this.categories = res.map((obj) => {
@@ -32,24 +33,38 @@ export class AdminProductsNewComponent extends BootstrapFormComponent implements
                         id: obj.id,
                     }
                 });
-                console.log(this.categories);
-
             });
     }
 
-    public handleSubmit(isSubmitted: boolean) {
+    public handleSubmit(isSubmitted: boolean): void {
         if (isSubmitted) {
-            const { value } = this.formGroup;
-            console.log(value);
-            
+            const clone = { ...this.formGroup.value };
+            const collectionPath: string = utilities.default.pathMaker(clone.categories.name, clone.categories.id);
 
+            this.service
+                .getCollectionOrderBy(collectionPath, 'seqN', "desc")
+                .pipe(takeUntil(this.destroyed$))
+                .subscribe((response: any) => {
+
+                    const seqNHighest: number = response[0].seqN;
+                    clone.seqN = seqNHighest + 1;
+
+                    const newResource: IProduct = {
+                        category: clone.categories.name,
+                        imageUrl: clone.imageUrl,
+                        price: clone.price,
+                        seqN: clone.seqN,
+                        title: clone.title
+                    };
+                    this.service.create(collectionPath, newResource);
+                    this.formGroup.reset();
+                });
         }
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.formMaker(formTemplate);
         this.getCategories();
-
     }
 
     public ngOnDestroy(): void {

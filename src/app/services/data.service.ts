@@ -77,5 +77,7 @@ export class DataService {
         return this.db.collection(collectioName).add(newResource)
     }
 
-
+    delete(collectioName: string, id: string) {
+        return this.db.collection(collectioName).doc(id).delete();
+    }
 }

@@ -22,7 +22,13 @@ function removeDuplicates(items, key) {
     return result;
 }
 
+function pathMaker(string, id: string): string {
+    const subPath: string = string.replace(/ /g, '').toLowerCase();
+    return `categories/${id}/${subPath}`;
+}
+
 export default {
     groupBy,
-    removeDuplicates
+    removeDuplicates,
+    pathMaker
 }
