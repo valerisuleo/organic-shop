@@ -11,17 +11,16 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route, state: RouterStateSnapshot): Observable<boolean> | boolean {
         return this.service.isLoggedIn()
-        .pipe(
-            map((res) => {
-                if (res) {
-                    return true;
-                } else {
-                    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
-                    return false;
-                }
-            })
-        )
-
+            .pipe(
+                map((res) => {
+                    if (res) {
+                        return true;
+                    } else {
+                        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
+                        return false;
+                    }
+                })
+            )
     }
 }
 
