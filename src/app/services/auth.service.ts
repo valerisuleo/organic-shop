@@ -5,14 +5,24 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+    oauth = null;
 
-    constructor(private angularFire: AngularFireAuth) { }
+    constructor(private angularFire: AngularFireAuth) {
+        this.angularFire.authState.subscribe((data) => {
+            this.oauth = data;
+            
+        })
+    }
+
+    get authenticated(): boolean {
+        return this.oauth !== null;
+    }
 
     getAuthState() {
         return this.angularFire.authState
-        .pipe(
-            map(data => data.toJSON())
-        )
+            .pipe(
+                map(data => data.toJSON())
+            )
     }
 
     signOut() {

@@ -41,7 +41,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         this.service.getAll('categories')
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: ICategoryMenu[]) => {
-                const defaultCategory: ICategoryMenu = this.getDefaultCollection(response, 'categoryName', 'Bread');
+                const defaultCategory: ICategoryMenu = this.getDefaultCollection(response, 'categoryName', 'Vegetables');
                 const { id, categoryName } = defaultCategory;
 
                 this.apiEndpoint = utilities.default.pathMaker(categoryName, id);

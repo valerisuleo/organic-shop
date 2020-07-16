@@ -35,6 +35,7 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
 import { FilterPipe } from './components/admin/filter.pipe';
 import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
 import { AdminProductsNewComponent } from './components/admin/admin-products-new/admin-products-new.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { AdminProductsNewComponent } from './components/admin/admin-products-new
     providers: [
         DataService,
         AuthService,
+        AuthGuard
     ],
     bootstrap: [AppComponent]
 })
