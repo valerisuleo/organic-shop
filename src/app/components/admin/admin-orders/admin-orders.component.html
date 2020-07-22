@@ -85,8 +85,8 @@
     </div>
 </div>
 
-<div *ngIf="!orders.length" class="row m-5">
-    <div class="col-xl-8">
+<div *ngIf="!orders.length" class="row alert-wrapper m-5">
+    <div class="col-md-12 col-xl-8">
         <bootstrap-alert 
             [className]="'warning'" 
             (handleClick)="handleClick($event)">

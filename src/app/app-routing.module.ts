@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProductsIndexComponent } from './components/products/products-index/products-index.component';
+import { ProductsIndexComponent } from './components/products-list/products-list.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { AuthGuard } from './services/auth-guard.service';

@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as utilities from '../../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
-import { IProduct, IPagination } from '../../products/interfaces';
+import { IProduct, IPagination } from '../../interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IThLabel } from '../interfaces';

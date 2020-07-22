@@ -1,6 +1,6 @@
 import * as firebaseui from 'firebaseui';
 import * as firebase from 'firebase/app';
-import * as fsBatchedWrites from '../batched-writes';
+import * as fsBatchedWrites from '../../batched-writes';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';

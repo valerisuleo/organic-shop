@@ -1,12 +1,13 @@
-import * as fsBatchedWrites from '../batched-writes';
+import * as fsBatchedWrites from '../../batched-writes';
 import * as utilities from '../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { takeUntil } from 'rxjs/operators';
-import { IProduct } from '../products/interfaces';
+import { IProduct } from '../interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { HostListener } from "@angular/core";
 
 @Component({
     selector: 'shopping-cart',
@@ -16,18 +17,33 @@ import { Router } from '@angular/router';
 export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     public pruductsInBucket: IProduct[];
-    public isWhatWeDoInTheShadow: IProduct[] =[];
+    public isWhatWeDoInTheShadow: IProduct[] = [];
     public th: string[] = ['', 'Product', 'Quantity', 'Price'];
 
     public totalAmount: number;
     private uid: string = localStorage.getItem('uid');
     private destroyed$: Subject<boolean> = new Subject();
+    isMobile: boolean;
 
     constructor(
         private service: DataService,
         private router: Router,
         private db: AngularFirestore
-    ) { }
+    ) {
+        this.onResize();
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event?) {
+        const screenWidth: number = window.innerWidth;
+        
+        if (screenWidth > 200 && screenWidth < 640) {
+            this.isMobile = true;
+        } else {
+            this.isMobile = false;
+        }
+
+    }
 
     public getBucket(): void {
         this.service.getItem('userBucket', this.uid)

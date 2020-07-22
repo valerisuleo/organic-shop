@@ -1,6 +1,6 @@
-import * as fsBatchedWrites from '../batched-writes';
+import * as fsBatchedWrites from '../../batched-writes';
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../products/interfaces';
+import { IProduct } from '../interfaces';
 import { BootstrapFormComponent } from '../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from './form-template';
 import { AuthService } from '../../services/auth.service';

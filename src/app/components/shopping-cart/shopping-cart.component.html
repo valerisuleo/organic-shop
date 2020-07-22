@@ -1,11 +1,11 @@
-<div class="row m-3">
-    <div class="col-xl-8">
+<div class="row m-3" *ngIf="!isMobile">
+    <div class="col-md-12 col-xl-8">
         <ng-container *ngIf="isWhatWeDoInTheShadow.length
             then shoppingCart
             else alert">
         </ng-container>
     </div>
-    <div class="col-xl-4">
+    <div class="col-md-12 col-xl-4">
         <bootstrap-card *ngIf="isWhatWeDoInTheShadow.length">
             <ng-container class="selector-header">
                 <div class="card-header">
@@ -22,7 +22,6 @@
         </bootstrap-card>
     </div>
 </div>
-
 
 <ng-template #shoppingCart>
 
@@ -87,3 +86,57 @@
         <ng-container class="label">Shop Now</ng-container>
     </bootstrap-alert>
 </ng-template>
+
+<!-- mobile layout -->
+<div class="row mt-3" *ngIf="isMobile">
+    <div class="col">
+        <bootstrap-card>
+            <ng-container class="selector-header">
+                <div class="card-header">
+                    <h5 class="card-title">You have {{ isWhatWeDoInTheShadow.length }} items in your cart.</h5>
+                    <p class="card-text">Subtotal: <strong>${{ totalAmount | number }}</strong></p>
+                    <button (click)="navigateTo()" class="btn btn-primary">Proceed to Checkout</button>
+                </div>
+            </ng-container>
+            <ng-container class="selector-body">
+                <div class="card-body">
+                    <bootstrap-table>
+                        <ng-container class="header-table">
+                            <tr class="header-tr">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </ng-container>
+
+                        <ng-container class="body-table">
+
+                            <tr *ngFor="let product of pruductsInBucket">
+
+                                <td>
+                                    <div class="img-wrapper">
+                                        <img src="{{ product.imageUrl }}" alt="">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <p>
+                                        {{ product.title }}
+                                    </p>
+                                    <p>
+                                        <small>${{ product.price | number }} x {{ product.quantity }}</small>
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <small>${{ product.price * product.quantity | number }}</small>
+                                </td>
+
+                            </tr>
+                        </ng-container>
+                    </bootstrap-table>
+                </div>
+            </ng-container>
+        </bootstrap-card>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]='formGroup'>
+<form (ngSubmit)="submit()" [formGroup]='formGroup' class="mb-3">
     <ng-content></ng-content>
     <button type="submit" [ngClass]="contextualClasses" [disabled]="!formGroup.valid || isLoading">{{ label }}</button>
       <button *ngIf="deleteBtn" (click)="deleteItem()" class="btn btn-danger m-3" type="button" [disabled]="isLoading">

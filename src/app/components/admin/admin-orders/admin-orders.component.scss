@@ -77,3 +77,10 @@ tr {
     height: 300px;
     overflow-y: auto;
 }
+
+div.alert-wrapper {
+    @media only screen and (max-width: 640px) {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}

@@ -1,8 +1,10 @@
-<table [ngClass]="contextualClasses">
-    <thead>
-        <ng-content select=".header-table"></ng-content>
-    </thead>
-    <tbody>
-        <ng-content select=".body-table"></ng-content>
-    </tbody>
-</table>    
+  <div class="table-responsive-sm">
+    <table [ngClass]="contextualClasses">
+        <thead>
+            <ng-content select=".header-table"></ng-content>
+        </thead>
+        <tbody>
+            <ng-content select=".body-table"></ng-content>
+        </tbody>
+    </table>  
+  </div>

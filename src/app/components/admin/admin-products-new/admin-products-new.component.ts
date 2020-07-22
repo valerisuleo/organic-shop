@@ -2,7 +2,7 @@ import * as utilities from '../../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BootstrapFormComponent } from '../../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from '../admin-products-edit/form-template';
-import { ICategory, IProduct } from '../../products/interfaces';
+import { ICategory, IProduct } from '../../interfaces';
 import { Subject } from 'rxjs';
 import { DataService } from '../../../services/data.service';
 import { takeUntil } from 'rxjs/operators';

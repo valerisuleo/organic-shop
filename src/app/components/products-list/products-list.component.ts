@@ -1,17 +1,17 @@
 import * as fsBatchedWrites from '../../batched-writes';
-import * as utilities from '../../utilities';
+import * as utilities from '../utilities';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from '../../../services/data.service';
+import { DataService } from '../../services/data.service';
 import { IProduct, ICategoryMenu, IListGroup, IPagination } from '../interfaces';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-    selector: 'products-index',
-    templateUrl: './products-index.component.html',
-    styleUrls: ['./products-index.component.scss']
+    selector: 'products-list',
+    templateUrl: './products-list.component.html',
+    styleUrls: ['./products-list.component.scss']
 })
 export class ProductsIndexComponent implements OnInit, OnDestroy {
 

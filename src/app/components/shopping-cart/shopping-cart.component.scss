@@ -2,6 +2,13 @@
     height: 100px;
     width: 100px;
     border-radius: 100px;
+    overflow: hidden;
+
+    @media only screen and (max-width: 640px) {
+        height: 50px;
+        width: 50px;
+        border-radius: 50px;
+    }
 
     img {
         max-width: 100%;
@@ -23,10 +30,11 @@ tr>td {
 .header-tr {
     th {
         border-bottom: none;
+
         &:nth-of-type(1) {
             font-weight: normal;
         }
-        
+
         &:nth-of-type(4) {
             font-weight: normal;
 
@@ -35,4 +43,8 @@ tr>td {
             }
         }
     }
+}
+
+.input-group {
+    min-width: 10em;
 }

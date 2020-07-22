@@ -1,8 +1,8 @@
 import * as utilities from '../../utilities';
-import * as fsBatchedWrites from '../../batched-writes';
+import * as fsBatchedWrites from '../../../batched-writes';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../services/data.service';
-import { IProduct, ICategory } from '../../products/interfaces';
+import { IProduct, ICategory } from '../../interfaces';
 import { BootstrapFormComponent } from '../../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from './form-template';
 import { Subject } from 'rxjs';

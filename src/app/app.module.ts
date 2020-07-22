@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -18,11 +17,6 @@ import { AuthService } from './services/auth.service';
 import { AppComponent } from './app.component';
 import { BootstrapNavbarComponent } from './components/bootstrap-navbar/bootstrap-navbar.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
-import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
-import { FilterPipe } from './components/admin/filter.pipe';
-import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
-import { AdminProductsNewComponent } from './components/admin/admin-products-new/admin-products-new.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { ShoppingModule } from './components/shopping.module';
@@ -35,11 +29,6 @@ import { AdminModule } from './components/admin/admin.module';
         AppComponent,
         BootstrapNavbarComponent,
         LoginComponent,
-        // AdminOrdersComponent,
-        // AdminProductsComponent,
-        // FilterPipe,
-        // AdminProductsEditComponent,
-        // AdminProductsNewComponent,
     ],
     imports: [
         BrowserModule,
@@ -49,7 +38,6 @@ import { AdminModule } from './components/admin/admin.module';
         AngularFireAnalyticsModule,
         AngularFireAuthModule,
         FontAwesomeModule,
-        // FormsModule,
         SharedModule,
         ShoppingModule,
         NgbModule,

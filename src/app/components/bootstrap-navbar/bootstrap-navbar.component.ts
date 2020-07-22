@@ -1,4 +1,4 @@
-import * as fsBatchedWrites from '../batched-writes';
+import * as fsBatchedWrites from '../../batched-writes';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';

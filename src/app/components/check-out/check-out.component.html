@@ -1,13 +1,13 @@
 <div class="wrapper">
     <h2>Shipping</h2>
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-12 col-xl-6">
             <bootstrap-form (handleSubmit)="handleSubmit($event)" [label]="'Place Order'" [formGroup]='formGroup' [className]="'organic'">
                 <bootstrap-input *ngFor="let item of inputs" [formGroup]='formGroup' [name]='item.name' [type]='item.type' [label]='item.label'>
                 </bootstrap-input>
             </bootstrap-form>
         </div>
-        <div class="col-6">
+        <div class="col-md-12 col-xl-6">
             <div class="frame">
                 <h3>Order Summary</h3>
                 <p>You have {{ numberOfItems }} items in your shopping cart.</p>
