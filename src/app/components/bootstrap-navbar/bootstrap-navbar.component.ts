@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class BootstrapNavbarComponent implements OnInit {
 
     public isLoggedIn: boolean;
+    public isAdmin: boolean;
     public displayName: string;
     public counter: number;
     public userBucket = { id: '', items: [] };
@@ -33,6 +34,7 @@ export class BootstrapNavbarComponent implements OnInit {
                 this.isLoggedIn = data;
 
                 if (this.isLoggedIn) {
+                    this.getRole();
                     this.authService.getAuthState()
                         .subscribe((res: any) => {
                             const { uid, displayName } = res;
@@ -55,6 +57,13 @@ export class BootstrapNavbarComponent implements OnInit {
                 else {
                     // console.log('bucker alreday on db', response);
                 }
+            });
+    }
+
+    public getRole(): void {
+        this.authService.getCurrentUser()
+            .subscribe((data: boolean) => {
+                this.isAdmin = data;
             });
     }
 
