@@ -152,10 +152,14 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.authService.getAuthState()
             .subscribe((data: any) => {
-                const { uid } = data;
-                this.uid = uid;
-                this.getUserBucket(uid);
-                this.getCategoriesMenu();
+                if (data) {
+                    const { uid } = data;
+                    this.uid = uid;
+                    this.getUserBucket(uid);
+                    this.getCategoriesMenu();
+                } else {
+                    this.getCategoriesMenu();
+                }
             });
     }
 

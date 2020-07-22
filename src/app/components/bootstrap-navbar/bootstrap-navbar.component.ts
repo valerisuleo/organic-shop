@@ -16,13 +16,9 @@ export class BootstrapNavbarComponent implements OnInit {
     public isLoggedIn: boolean;
     public displayName: string;
     public counter: number;
+    public userBucket = { id: '', items: [] };
     public faLeaf: IconDefinition = faLeaf;
     public faShoppingCart: IconDefinition = faShoppingCart;
-
-    userBucket = {
-        id: '',
-        items: []
-    }
 
     constructor(
         private db: AngularFirestore,

@@ -10,24 +10,27 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
 import { AdminProductsEditComponent } from './components/admin/admin-products-edit/admin-products-edit.component';
 import { AdminProductsNewComponent } from './components/admin/admin-products-new/admin-products-new.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
 
 const routes: Routes = [
     // admin module
-    { path: 'admin/products/edit/:id', component: AdminProductsEditComponent },
-    { path: 'admin/products/new', component: AdminProductsNewComponent },
-    { path: 'admin/products', component: AdminProductsComponent },
-    { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard] },
+    { path: 'admin/products/edit/:id', component: AdminProductsEditComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'admin/products/new', component: AdminProductsNewComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     // user module
-    { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard]},
-    { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard]},
-    { path: 'shopping-carts', component: ShoppingCartComponent, canActivate: [AuthGuard]},
-    { path: 'products', component: ProductsIndexComponent, canActivate: [AuthGuard]},
-    { path: 'login', component: LoginComponent},
+    { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+    { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+    { path: 'shopping-carts', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+    { path: 'products', component: ProductsIndexComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: 'products' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+

@@ -30,7 +30,8 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
     }
 
     private getCategories(): void {
-        this.service.getAll('categories')
+        this.service
+            .getAll('categories')
             .pipe(takeUntil(this.destroyed$))
             .subscribe((res: any) => {
                 this.categories = res.map((obj) => {
@@ -81,12 +82,18 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
             clone.title = value.title;
 
             if (clone.category === value.categories.name) {
-                this.service.updateItem(collectionPath, `/${clone.id}`, clone);
-                this.router.navigate(['/admin/products']);
+                this.service
+                    .updateItem(collectionPath, `/${clone.id}`, clone)
+                    .then(res => console.log(res))
+                    .catch(err => console.log('err', err))
+                    .finally(() => {
+                        this.router.navigate(['/admin/products']);
+                    })
             } else {
                 clone.category = value.categories.name;
 
-                this.service.getCollectionOrderBy(collectionPath, 'seqN', "desc")
+                this.service
+                    .getCollectionOrderBy(collectionPath, 'seqN', "desc")
                     .pipe(takeUntil(this.destroyed$))
                     .subscribe((response: any) => {
 
@@ -117,7 +124,7 @@ export class AdminProductsEditComponent extends BootstrapFormComponent implement
 
             fsBatchedWrites.default.resetSeqNum(this.db, collectionPath);
             this.isLoading = true;
-            // we need time some time to update the seqN.
+            // we need time some time to update the collectionSize.
             setTimeout(() => {
                 this.isLoading = false;
                 this.router.navigate(['/admin/products']);
