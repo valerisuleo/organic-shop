@@ -1,32 +1,48 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand ml-5" [routerLink]="['/products']">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/products']">
         <fa-icon [icon]="faLeaf"></fa-icon>
     </a>
-    <div class="navbar-collapse" id="navbarNavAltMarkup">
+    <button (click)="isOpen = !isOpen" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="navbar-nav mr-auto">
-            <a *ngIf="isLoggedIn" class="nav-item nav-link" [routerLink]="['/shopping-carts']">
+    <div class="collapse navbar-collapse" [class.show]="isOpen" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <a *ngIf="isLoggedIn && !isOpen" class="nav-item nav-link" [routerLink]="['/shopping-carts']">
                 <fa-icon [icon]="faShoppingCart"></fa-icon>
                 <span class="ml-2">
                     {{ counter }}
                 </span>
             </a>
-        </div>
-
-        <div class="row mr-5">
-            <div class="col">
-                <div *ngIf="isLoggedIn" ngbDropdown class="d-inline-block">
-                    <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>{{ displayName | titlecase }}</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem [routerLink]="['/shopping-carts']">My Orders</button>
-                        <button ngbDropdownItem [routerLink]="['/check-out']">Checkout</button>
-                        <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/orders']">Manage Orders</button>
-                        <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/products']">Manage Products</button>
-                        <button ngbDropdownItem (click)="logout()">Log Out</button>
-                    </div>
+            <li *ngIf="isLoggedIn && isOpen" class="nav-item">
+                <a class="nav-link" [routerLink]="['/shopping-carts']">My Orders</a>
+            </li>
+            <ng-container *ngIf="isOpen">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/check-out']">Checkout</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="isAdmin" class="nav-link" [routerLink]="['/admin/orders']">Manage Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="isAdmin" class="nav-link" [routerLink]="['/admin/products']">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()">Log Out</a>
+                </li>
+            </ng-container>
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+            <div *ngIf="isLoggedIn && !isOpen" ngbDropdown class="d-inline-block  mr-sm-3">
+                <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>{{ displayName | titlecase }}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem [routerLink]="['/shopping-carts']">My Orders</button>
+                    <button ngbDropdownItem [routerLink]="['/check-out']">Checkout</button>
+                    <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/orders']">Manage Orders</button>
+                    <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/products']">Manage Products</button>
+                    <button ngbDropdownItem (click)="logout()">Log Out</button>
                 </div>
             </div>
         </div>
-
     </div>
 </nav>

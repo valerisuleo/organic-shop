@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class BootstrapNavbarComponent implements OnInit {
 
+    public isOpen: boolean;
     public isLoggedIn: boolean;
     public isAdmin: boolean;
     public displayName: string;
@@ -61,18 +62,13 @@ export class BootstrapNavbarComponent implements OnInit {
     }
 
     public getRole(): void {
-        this.authService.getCurrentUser()
-            .subscribe((data: boolean) => {
-                this.isAdmin = data;
-            });
+        this.authService.getCurrentUser().subscribe((response: boolean) => this.isAdmin = response);
     }
 
     public logout(): void {
         this.authService.signOut();
         localStorage.clear();
         this.router.navigate(['/login']);
-        // here add some code to destroy userbucket if empty...
-
     }
 
     public displayQuantity(uid): void {
