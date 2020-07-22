@@ -122,7 +122,9 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         this.service.getItem('userBucket', uid)
             .pipe(takeUntil(this.destroyed$))
             .subscribe((response: any) => {
-                this.isWhatWeDoInTheShadow = response.items;
+                if (response && response.items) {
+                    this.isWhatWeDoInTheShadow = response.items;
+                }
                 const data = utilities.default.groupBy(this.isWhatWeDoInTheShadow, 'title');
                 this.isWhatWeDoInTheShadow.forEach((obj: IProduct) => {
                     obj.quantity = data[obj.title]?.length;

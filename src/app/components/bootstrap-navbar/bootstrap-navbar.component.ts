@@ -72,7 +72,7 @@ export class BootstrapNavbarComponent implements OnInit {
     }
 
     public displayQuantity(uid): void {
-        this.service.getItem('userBucket', uid).subscribe((response: any) => this.counter = response.items.length);
+        this.service.getItem('userBucket', uid).subscribe((response: any) => this.counter = response?.items.length);
     }
 
     public ngOnInit(): void {

@@ -1,42 +1,42 @@
 let collectionBread = [
     {
         title: 'Pizza Slice',
-        imageUrl: 'https://www.dropbox.com/s/0dymh0nkdhccz6j/119627_01.jpg?raw=1',
+        imageUrl: 'https://images.pexels.com/photos/4004463/pexels-photo-4004463.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         price: 0.69,
         category: 'Bread',
         inStock: 30
     },
     {
-        title: 'Italian Style Panini Roll',
-        imageUrl: 'https://www.dropbox.com/s/b03fg3pjd8m9e0z/1950_01.jpg?raw=1',
+        title: 'Brown Pie',
+        imageUrl: 'https://images.pexels.com/photos/3223494/pexels-photo-3223494.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 0.25,
         category: 'Bread',
         inStock: 60
     },
     {
         title: 'French Baguette',
-        imageUrl: 'https://www.dropbox.com/s/kgpaae6jahstelz/6742_01.jpg?raw=1',
+        imageUrl: 'https://images.pexels.com/photos/1387070/pexels-photo-1387070.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         price: 0.69,
         category: 'Bread',
         inStock: 90
     },
     {
-        title: 'Maple and Pecan',
-        imageUrl: 'https://www.dropbox.com/s/8wqgzxumpz9e99w/6817_01.jpg?raw=1',
+        title: 'Cupcake with Chocolate Cubes',
+        imageUrl: 'https://images.pexels.com/photos/1908675/pexels-photo-1908675.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         price: 0.49,
         category: 'Bread',
         inStock: 120
     },
     {
         title: 'Double Chocolate Cookie',
-        imageUrl: 'https://www.dropbox.com/s/lqjddrhhehdwiow/5207811_01.jpg?raw=1',
+        imageUrl: 'https://images.pexels.com/photos/6719/food-sugar-milk-cookie.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 0.39,
         category: 'Bread',
         inStock: 150
     },
     {
         title: 'All Butter Croisssant',
-        imageUrl: 'https://www.dropbox.com/s/ojwtiirrdvo1mhs/121278_01.jpg?raw=1',
+        imageUrl: 'https://images.pexels.com/photos/2135/food-france-morning-breakfast.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 0.37,
         category: 'Bread',
         inStock: 180

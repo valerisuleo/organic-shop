@@ -1,35 +1,35 @@
 let collectionVegetable = [
     {
-        title: 'Oaklands Selection Pointed Red Peppers ',
-        imageUrl: 'https://www.dropbox.com/s/3uvy83gkftwtmln/82632_01.jpg?raw=1',
+        title: 'Green Peapods',
+        imageUrl: 'https://images.pexels.com/photos/1437587/pexels-photo-1437587.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         price: 1.05,
         category: 'Vegetables',
         inStock: 25
     },
     {
-        title: 'Oaklands Organic Vine Tomatoes',
-        imageUrl: 'https://www.dropbox.com/s/7qe68yj8wyh0jd0/84570_01.jpg?raw=1',
+        title: 'Mixed Peppers',
+        imageUrl: 'https://images.pexels.com/photos/7017/food-peppers-kitchen-yum.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         price: 1.60,
         category: 'Vegetables',
         inStock: 50
     },
     {
-        title: 'Oaklands Organic Carrots',
-        imageUrl: 'https://www.dropbox.com/s/qf1597z38c1p2sy/84610_01.jpg?raw=1',
+        title: 'Organic Carrots',
+        imageUrl: 'https://images.pexels.com/photos/3297799/pexels-photo-3297799.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 0.95,
         category: 'Vegetables',
         inStock: 75
     },
     {
-        title: 'Oaklands Baby Corn',
-        imageUrl: 'https://www.dropbox.com/s/0cd780450mo01ho/82190_65.jpg?raw=1',
+        title: 'Broccoli',
+        imageUrl: 'https://images.pexels.com/photos/4055255/pexels-photo-4055255.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 1.09,
         category: 'Vegetables',
         inStock: 100
     },
     {
-        title: 'Oaklands Selection British Piccolo Tomatoes',
-        imageUrl: 'https://www.dropbox.com/s/daio1kdyrfw4jkp/82394_01.jpg?raw=1',
+        title: 'Vine Tomatoes',
+        imageUrl: 'https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         price: 1.45,
         category: 'Vegetables',
         inStock: 125
