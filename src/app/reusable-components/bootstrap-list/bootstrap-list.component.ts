@@ -6,15 +6,15 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
     styleUrls: ['./bootstrap-list.component.scss']
 })
 export class BootstrapListComponent implements OnChanges {
-    @Input() props: any;
-    @Output('handleSelectedLi') click = new EventEmitter();
+    @Input() public props: any;
+    @Output('handleSelectedLi') public click = new EventEmitter();
 
-    list: any[] = [];
-    propertyKey: string;
+    public list: any[] = [];
+    public propertyKey: string;
 
     constructor() { }
 
-    toggleActiveClass(current): void {
+    public toggleActiveClass(current): void {
         this.list
             .filter(el => el != current)
             .forEach(item => item.isActive = false);
@@ -22,7 +22,7 @@ export class BootstrapListComponent implements OnChanges {
         this.click.emit(current);
     }
 
-    ngOnChanges(change: SimpleChanges): void {
+    public ngOnChanges(change: SimpleChanges): void {
         const { currentValue, firstChange } = change.props;
 
         if (currentValue && !firstChange ||

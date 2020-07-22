@@ -55,7 +55,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
         this.apiEndPoints.forEach((apiEndPoint: string) => {
             this.service
-                .getCollectionPaginated(apiEndPoint, 'seqN', "asc", this.lastPageloaded, 4)
+                .getCollectionPaginated(apiEndPoint, 'seqN', "asc", this.lastPageloaded, 2)
                 .subscribe((response: any) => {
                     response.forEach((item: IProduct) => all.push(item));
                     this.stock = all;

@@ -5,31 +5,31 @@ let collection = [
     {
         categoryName: 'Bread',
         isActive: false,
-        path: '',
+        isDisable: false,
         collectionSize: collectionBread.length
     },
     {
         categoryName: 'Dairy',
         isActive: false,
-        path: '',
+        isDisable: true,
         collectionSize: 0
     },
     {
         categoryName: 'Fruits',
         isActive: false,
-        path: '',
+        isDisable: true,
         collectionSize: 0
     },
     {
         categoryName: 'Seasoning and Spice',
         isActive: false,
-        path: '',
+        isDisable: true,
         collectionSize: 0
     },
     {
         categoryName: 'Vegetables',
         isActive: false,
-        path: '',
+        isDisable: false,
         collectionSize: collectionVegetable.length
     },
 ];
