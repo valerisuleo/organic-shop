@@ -1,6 +1,6 @@
-<div *ngIf="orders.length" class="wrapper">
+<div *ngIf="orders.length else alert" class="wrapper">
     <!-- MODAL -->
-    <div *ngIf="isOpen" (click)="closeModal($event)" class="modal-container">
+    <div *ngIf="isOpen" (click)="closeModal($event)" class="modal-container animated fadeIn">
         <div class="row">
 
             <div class="col-md-6">
@@ -85,21 +85,24 @@
     </div>
 </div>
 
-<div *ngIf="!orders.length" class="row alert-wrapper m-5">
-    <div class="col-md-12 col-xl-8">
-        <bootstrap-alert 
-            [className]="'warning'" 
-            (handleClick)="handleClick($event)">
-            
-            <ng-container class="title">
-                You don't have any orders yet.
-            </ng-container>
-            <ng-container class="message">
-                Customers will come soon. Don't give up!
-            </ng-container>
-            <ng-container class="label">
-                Back
-            </ng-container>
-        </bootstrap-alert>
+<!-- Alert -->
+<ng-template #alert>
+    <div class="row alert-wrapper m-5 animated fadeIn delay">
+        <div class="col-md-12 col-xl-8">
+            <bootstrap-alert 
+                [className]="'warning'" 
+                (handleClick)="handleClick($event)">
+                
+                <ng-container class="title">
+                    You don't have any orders yet.
+                </ng-container>
+                <ng-container class="message">
+                    Customers will come soon. Don't give up!
+                </ng-container>
+                <ng-container class="label">
+                    Back
+                </ng-container>
+            </bootstrap-alert>
+        </div>
     </div>
-</div>
+</ng-template>

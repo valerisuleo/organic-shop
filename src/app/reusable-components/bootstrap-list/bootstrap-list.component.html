@@ -2,7 +2,6 @@
     <li *ngFor="let item of list" 
         (click)="toggleActiveClass(item)" 
         class="list-group-item" [class.disabled]="item.isDisable"
-        [ngClass]='item.isActive && item.cssClass'>
-        {{ item[propertyKey] }}
+        [ngClass]='item.isActive && item.cssClass'>{{ item[propertyKey] }}
     </li>
 </ul>

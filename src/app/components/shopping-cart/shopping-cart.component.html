@@ -1,4 +1,4 @@
-<div class="row m-3" *ngIf="!isMobile">
+<div class="row m-3 animated fadeIn" *ngIf="!isMobile">
     <div class="col-md-12 col-xl-8">
         <ng-container *ngIf="isWhatWeDoInTheShadow.length
             then shoppingCart
@@ -100,7 +100,7 @@
             </ng-container>
             <ng-container class="selector-body">
                 <div class="card-body">
-                    <bootstrap-table>
+                    <bootstrap-table [className]="'borderless'">
                         <ng-container class="header-table">
                             <tr class="header-tr">
                                 <th></th>
@@ -109,9 +109,9 @@
                             </tr>
                         </ng-container>
 
-                        <ng-container class="body-table">
+                        <ng-container class="body-table mobile">
 
-                            <tr *ngFor="let product of pruductsInBucket">
+                            <tr *ngFor="let product of pruductsInBucket; index as i" [ngClass]="{'border-top-none': i === 0}">
 
                                 <td>
                                     <div class="img-wrapper">

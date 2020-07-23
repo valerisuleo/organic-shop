@@ -28,6 +28,7 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
 
     public apiEndpoint: string;
     public uid: string;
+    public animated: boolean = false;
 
     private destroyed$: Subject<boolean> = new Subject();
 
@@ -68,8 +69,12 @@ export class ProductsIndexComponent implements OnInit, OnDestroy {
         // reset
         this.products = [];
         this.lastPageloaded = 0;
-        //
         this.apiEndpoint = utilities.default.pathMaker(categoryName, id);
+        this.animated = true;
+        setTimeout(() => {
+            this.animated = false;
+        }, 500);
+        //
         this.collectionSize = collectionSize;
         this.getCollection();
     }

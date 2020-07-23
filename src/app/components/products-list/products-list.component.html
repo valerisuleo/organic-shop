@@ -1,9 +1,9 @@
-<div class="row wrapper m-5">
+<div class="row wrapper m-5 animated fadeIn">
     <div class="col-md-12 col-lg-4 col-xl-4">
         <bootstrap-list (handleSelectedLi)='handleSelectedLi($event)' [props]='listGroup'></bootstrap-list>
     </div>
 
-    <div class="col-md-12 col-lg-8 col-xl-8">
+    <div class="col-md-12 col-lg-8 col-xl-8" [ngClass]="{'animated fadeIn': animated}">
 
         <div class="row row-cols-md-1 row-cols-xl-2">
             <bootstrap-card *ngFor="let product of products; trackBy: trackProduct">
@@ -40,7 +40,8 @@
         </div>
       
         <nav>
-            <ul class="pagination justify-content-center m-5">
+            <ul class="pagination justify-content-center m-5 animated fadeIn delay-1s" 
+                [ngClass]="{'animated fadeIn delay-1s': animated}">
                 <ngbootstrap-pagination
                     [collectionSize]="collectionSize" 
                     [(page)]="page"

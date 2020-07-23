@@ -48,3 +48,9 @@ tr>td {
 .input-group {
     min-width: 10em;
 }
+
+.border-top-none {
+    td {
+        border-top: 0px;
+    }
+}
