@@ -34,7 +34,6 @@
                 <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>{{ displayName | titlecase }}</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                     <button ngbDropdownItem [routerLink]="['/shopping-carts']">My Orders</button>
-                    <button ngbDropdownItem [routerLink]="['/check-out']">Checkout</button>
                     <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/orders']">Manage Orders</button>
                     <button *ngIf="isAdmin" ngbDropdownItem [routerLink]="['/admin/products']">Manage Products</button>
                     <button ngbDropdownItem (click)="logout()">Log Out</button>
