@@ -19,9 +19,6 @@
             </li>
             <ng-container *ngIf="isLoggedIn && isOpen">
                 <li class="nav-item">
-                    <a class="nav-link" (click)="isOpen = false" [routerLink]="['/check-out']">Checkout</a>
-                </li>
-                <li class="nav-item">
                     <a *ngIf="isAdmin" class="nav-link" (click)="isOpen = false" [routerLink]="['/admin/orders']">Manage Orders</a>
                 </li>
                 <li class="nav-item">
