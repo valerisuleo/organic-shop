@@ -1,4 +1,5 @@
 import * as utilities from '../../utilities';
+import * as _ from 'lodash';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BootstrapFormComponent } from '../../../reusable-components/bootstrap-form/bootstrap-form.component';
 import formTemplate from '../admin-products-edit/form-template';
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class AdminProductsNewComponent extends BootstrapFormComponent implements OnInit, OnDestroy {
 
+    isEmpty: any;
     public categories: ICategory[] = [];
     private destroyed$: Subject<boolean> = new Subject();
 

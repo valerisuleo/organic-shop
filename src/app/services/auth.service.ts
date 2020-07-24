@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
-import { Observable, forkJoin, combineLatest } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { DataService } from './data.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { result, lowerFirst } from 'lodash';
 import { IUser } from './interfaces';
 
 @Injectable()

@@ -1,31 +1,46 @@
-<div class="row d-flex justify-content-center mt-5">
-    <div class="col-9">
-        <div class="row">
-            <div class="col-md-12 col-xl-8">
-                <h2 class="mb-4">New Product</h2>
-                <bootstrap-form 
-                    (handleSubmit)="handleSubmit($event)" 
-                    [label]="'Save'"
-                    [className]="'organic'"
-                    [formGroup]='formGroup'>
-                    
-                    <bootstrap-input 
-                        *ngFor="let item of inputs" 
-                        [formGroup]='formGroup' 
-                        [name]='item.name' 
-                        [type]='item.type' 
-                        [label]='item.label'>
-                    </bootstrap-input>
-        
-                    <bootstrap-select *ngFor="let item of selects" 
-                        [formGroup]='formGroup'
-                        [options]='categories' 
-                        [optionKey]="'name'" 
-                        [name]='item.name' 
-                        [label]='item.label'>
-                    </bootstrap-select>
-                </bootstrap-form>
-            </div>
-        </div>
+<div class="row d-flex justify-content-center m-5">
+
+    <div class="col-md-12 col-xl-6">
+        <h2 class="mb-4">New Product</h2>
+        <bootstrap-form 
+            (handleSubmit)="handleSubmit($event)" 
+            [label]="'Save'"
+            [className]="'organic'"
+            [formGroup]='formGroup'>
+            
+            <bootstrap-input 
+                *ngFor="let item of inputs" 
+                [formGroup]='formGroup' 
+                [name]='item.name' 
+                [type]='item.type' 
+                [label]='item.label'>
+            </bootstrap-input>
+
+            <bootstrap-select *ngFor="let item of selects" 
+                [formGroup]='formGroup'
+                [options]='categories' 
+                [optionKey]="'name'" 
+                [name]='item.name' 
+                [label]='item.label'>
+            </bootstrap-select>
+        </bootstrap-form>
+        <button class="btn btn-secondary" [routerLink]="['/admin/products']">Back</button>
+
     </div>
+
+    <div class="col-md-12 col-xl-6">
+        <bootstrap-card *ngIf="formGroup.value.title">
+            <ng-container class="selector-header">
+                <img *ngIf="formGroup.value.imageUrl" src="{{formGroup.value.imageUrl}}" class="card-img-top" alt="...">
+            </ng-container>
+            <ng-container class="selector-body">
+                <div class="m-4">
+                    <h5 *ngIf="formGroup.value.title" class="card-title">{{formGroup.value.title}}</h5>
+                    <p *ngIf="formGroup.value.price" class="card-text">${{formGroup.value.price | number}}</p>
+                    <p *ngIf="formGroup.value.categories.name" class="card-text">Category: {{formGroup.value.categories.name}}</p>
+                </div>
+            </ng-container>
+        </bootstrap-card>
+    </div>
+
 </div>

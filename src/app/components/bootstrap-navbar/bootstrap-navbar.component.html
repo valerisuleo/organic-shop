@@ -17,7 +17,7 @@
             <li *ngIf="isLoggedIn && isOpen" class="nav-item">
                 <a class="nav-link" (click)="isOpen = false" [routerLink]="['/shopping-carts']">My Orders</a>
             </li>
-            <ng-container *ngIf="isOpen">
+            <ng-container *ngIf="isLoggedIn && isOpen">
                 <li class="nav-item">
                     <a class="nav-link" (click)="isOpen = false" [routerLink]="['/check-out']">Checkout</a>
                 </li>
